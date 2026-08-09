@@ -1,0 +1,19 @@
+# Vietnam Unique Travel - Root Security & Rewrite Configuration
+Options -Indexes
+
+# Block sensitive directories and files from direct browser access
+<FilesMatch "^\.env|\.git|schema\.sql|seed\.sql|\.docx$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Block direct HTTP access to protected application folders
+    RewriteRule ^(app|config|database|lang|storage|vendor|views)/ - [F,L]
+
+    # Forward all requests into public folder if accessed from root
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
