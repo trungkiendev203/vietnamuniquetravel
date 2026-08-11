@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, observerOptions);
 
-    const revealSelectors = '.tour-list-card, .vm-card, .why-carousel-sec, .tour-detail-card, .contact-form-box, .dest-spotlight-sec';
+    const revealSelectors = '.sovaba-hot-card, .tour-list-card, .vm-card, .why-carousel-sec, .tour-detail-card, .contact-form-box, .dest-spotlight-sec';
     document.querySelectorAll(revealSelectors).forEach((el, index) => {
       el.classList.add('reveal-on-scroll');
       el.style.transitionDelay = `${(index % 3) * 0.12}s`;
