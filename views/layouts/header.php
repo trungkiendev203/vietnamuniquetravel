@@ -45,16 +45,58 @@ $viSwitchUrl = base_url('vi/' . $viSwitchPath);
     </ul>
 
     <div style="display: flex; align-items: center; gap: 14px; flex-shrink: 0;">
-      <div class="lang-switch">
-        <a href="<?= $enSwitchUrl ?>" class="<?= $currentLang === 'en' ? 'active' : '' ?>" title="English">
-          <img src="https://flagcdn.com/w40/gb.png" alt="English" class="flag-icon">
-          <span>EN</span>
-        </a>
-        <span>|</span>
-        <a href="<?= $viSwitchUrl ?>" class="<?= $currentLang === 'vi' ? 'active' : '' ?>" title="Tiếng Việt">
-          <img src="https://flagcdn.com/w40/vn.png" alt="Tiếng Việt" class="flag-icon">
-          <span>VI</span>
-        </a>
+      <!-- Language Dropdown Selector (Flags + Google Translate) -->
+      <div class="lang-dropdown-wrapper">
+        <button class="lang-dropdown-btn" type="button" aria-expanded="false" aria-label="Select Language">
+          <img src="https://flagcdn.com/w40/<?= $currentLang === 'vi' ? 'vn' : 'gb' ?>.png" alt="Flag" class="flag-icon current-flag">
+          <span class="current-lang-code"><?= strtoupper($currentLang) ?></span>
+          <svg class="dropdown-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="lang-dropdown-menu">
+          <a href="<?= $enSwitchUrl ?>" data-lang="en" class="lang-option <?= $currentLang === 'en' ? 'active' : '' ?>">
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" class="flag-icon">
+            <span>English</span>
+          </a>
+          <a href="<?= $viSwitchUrl ?>" data-lang="vi" class="lang-option <?= $currentLang === 'vi' ? 'active' : '' ?>">
+            <img src="https://flagcdn.com/w40/vn.png" alt="Tiếng Việt" class="flag-icon">
+            <span>Tiếng Việt</span>
+          </a>
+          <div class="lang-dropdown-divider"></div>
+          <a href="#" data-lang="fr" class="lang-option">
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" class="flag-icon">
+            <span>Français</span>
+          </a>
+          <a href="#" data-lang="de" class="lang-option">
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="flag-icon">
+            <span>Deutsch</span>
+          </a>
+          <a href="#" data-lang="ja" class="lang-option">
+            <img src="https://flagcdn.com/w40/jp.png" alt="日本語" class="flag-icon">
+            <span>日本語</span>
+          </a>
+          <a href="#" data-lang="es" class="lang-option">
+            <img src="https://flagcdn.com/w40/es.png" alt="Español" class="flag-icon">
+            <span>Español</span>
+          </a>
+          <a href="#" data-lang="zh-CN" class="lang-option">
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" class="flag-icon">
+            <span>中文 (简体)</span>
+          </a>
+          <a href="#" data-lang="ko" class="lang-option">
+            <img src="https://flagcdn.com/w40/kr.png" alt="한국어" class="flag-icon">
+            <span>한국어</span>
+          </a>
+          <a href="#" data-lang="it" class="lang-option">
+            <img src="https://flagcdn.com/w40/it.png" alt="Italiano" class="flag-icon">
+            <span>Italiano</span>
+          </a>
+          <a href="#" data-lang="ru" class="lang-option">
+            <img src="https://flagcdn.com/w40/ru.png" alt="Русский" class="flag-icon">
+            <span>Русский</span>
+          </a>
+        </div>
       </div>
 
       <a href="<?= base_url($prefix . 'booking') ?>" class="btn btn-gold" style="padding: 9px 18px; font-size: 0.85rem;"><?= __('btn_book_tour') ?></a>
