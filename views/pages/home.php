@@ -273,9 +273,9 @@ $whyItems = array_map(function($item) {
 
       <!-- Background Photo Row (Exact 3 Cards) -->
       <div class="why-photo-row" id="whyPhotoRow">
-        <div class="why-bg-card card-side" id="bgCardLeft"><img src="<?= $whyItems[count($whyItems)-1]['full_img'] ?>" alt="Previous" loading="lazy"></div>
+        <div class="why-bg-card card-side" id="bgCardLeft" onclick="moveWhyGlassSlide(-1)" title="Click to view previous slide"><img src="<?= $whyItems[count($whyItems)-1]['full_img'] ?>" alt="Previous" loading="lazy"></div>
         <div class="why-bg-card card-center" id="bgCardCenter"><img src="<?= $whyItems[0]['full_img'] ?>" alt="Current" loading="lazy"></div>
-        <div class="why-bg-card card-side" id="bgCardRight"><img src="<?= $whyItems[1]['full_img'] ?>" alt="Next" loading="lazy"></div>
+        <div class="why-bg-card card-side" id="bgCardRight" onclick="moveWhyGlassSlide(1)" title="Click to view next slide"><img src="<?= $whyItems[1]['full_img'] ?>" alt="Next" loading="lazy"></div>
       </div>
 
       <!-- Center Glass Spotlight Card -->
