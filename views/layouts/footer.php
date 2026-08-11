@@ -2,7 +2,7 @@
 $currentLang = current_lang();
 $prefix = $currentLang === 'vi' ? 'vi/' : '';
 ?>
-<footer style="background-color: #161311; color: #FFFFFF; padding: 70px 0 0; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.9rem;">
+<footer style="background-color: #022F13; color: #FFFFFF; padding: 70px 0 0; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.9rem;">
   <div class="container">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 36px; padding-bottom: 50px;">
       
@@ -26,7 +26,7 @@ $prefix = $currentLang === 'vi' ? 'vi/' : '';
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
           <a href="#" aria-label="YouTube" style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #FFF; transition: background 0.3s;">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#161311"/></svg>
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#022F13"/></svg>
           </a>
           <a href="https://wa.me/84362191568" target="_blank" rel="noopener" aria-label="WhatsApp" style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #FFF; font-size: 1rem; transition: background 0.3s;">
             💬
