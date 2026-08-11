@@ -1839,16 +1839,32 @@ img {
 /* Hide Google Translate Banner & Popups Completely */
 .goog-te-banner-frame,
 .goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+iframe.skiptranslate,
+iframe[id*=":1.container"],
+iframe[id*=":2.container"],
+.VIpgJd-Z44fyf-V77wed-b9VOHc,
+.VIpgJd-Z44fyf-V77wed,
+.VIpgJd-Z44fyf-O22p2-O0vWhd,
 #goog-gt-tt,
 .goog-te-balloon-frame,
 .goog-tooltip,
 .goog-tooltip:hover {
   display: none !important;
   visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  pointer-events: none !important;
 }
 
-body {
+body, html {
   top: 0px !important;
+  position: static !important;
+  margin-top: 0px !important;
 }
 
 .goog-text-highlight {
@@ -1856,6 +1872,9 @@ body {
   box-shadow: none !important;
 }
 
-#google_translate_element {
+#google_translate_element,
+.goog-te-gadget,
+.goog-te-gadget-simple {
   display: none !important;
+  visibility: hidden !important;
 }

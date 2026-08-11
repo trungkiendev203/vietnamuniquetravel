@@ -158,4 +158,23 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Active Google Translate Banner Removal
+  function killGTBanner() {
+    const selector = 'iframe.goog-te-banner-frame, iframe.skiptranslate, iframe[id*=":1.container"], iframe[id*=":2.container"], .VIpgJd-Z44fyf-V77wed-b9VOHc, .VIpgJd-Z44fyf-V77wed, .VIpgJd-Z44fyf-O22p2-O0vWhd';
+    const frames = document.querySelectorAll(selector);
+    frames.forEach(frame => {
+      frame.style.setProperty('display', 'none', 'important');
+      frame.style.setProperty('visibility', 'hidden', 'important');
+      frame.style.setProperty('height', '0px', 'important');
+      if (frame.parentNode) {
+        frame.parentNode.removeChild(frame);
+      }
+    });
+    if (document.body && document.body.style.top !== '0px') {
+      document.body.style.top = '0px';
+    }
+  }
+
+  setInterval(killGTBanner, 150);
 });
