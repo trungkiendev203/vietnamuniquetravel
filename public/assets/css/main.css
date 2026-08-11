@@ -1912,4 +1912,97 @@ body, html {
   text-transform: none;
 }
 
+/* ==========================================================================
+   INTERACTIVE ANIMATIONS - Preloader, Scroll Reveal, Click Ripple FX
+   ========================================================================== */
+
+/* 1. Page Preloader */
+#page-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background-color: var(--color-forest-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.55s ease;
+}
+
+#page-preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.preloader-logo {
+  height: 85px;
+  width: auto;
+  animation: preloaderPulse 1.8s ease-in-out infinite alternate;
+}
+
+.preloader-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(242, 201, 76, 0.25);
+  border-top-color: var(--color-gold);
+  border-radius: 50%;
+  animation: preloaderSpin 0.75s linear infinite;
+}
+
+@keyframes preloaderSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes preloaderPulse {
+  0% { transform: scale(0.96); opacity: 0.85; }
+  100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 14px rgba(242, 201, 76, 0.6)); }
+}
+
+/* 2. Scroll Reveal Motion */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 3. Click Ripple & Active Micro-Animation */
+.btn, button, .nav-link, .sovaba-hot-link, .btn-search-pill {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:active, button:active, .sovaba-hot-link:active, .btn-search-pill:active {
+  transform: scale(0.97) !important;
+  transition: transform 0.1s ease !important;
+}
+
+.click-ripple-fx {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(0);
+  animation: ripplePulse 0.55s linear;
+  pointer-events: none;
+}
+
+@keyframes ripplePulse {
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
 

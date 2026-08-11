@@ -179,4 +179,61 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   setInterval(killGTBanner, 200);
+
+  // Page Preloader Fadeout
+  const preloader = document.getElementById('page-preloader');
+  if (preloader) {
+    const hidePreloader = () => {
+      preloader.classList.add('fade-out');
+      setTimeout(() => { preloader.style.display = 'none'; }, 550);
+    };
+
+    if (document.readyState === 'complete') {
+      setTimeout(hidePreloader, 200);
+    } else {
+      window.addEventListener('load', () => setTimeout(hidePreloader, 200));
+    }
+    // Safety fallback
+    setTimeout(hidePreloader, 2200);
+  }
+
+  // Scroll Reveal Animations (IntersectionObserver)
+  if ('IntersectionObserver' in window) {
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const revealSelectors = '.sovaba-hot-card, .vm-card, .why-glass-center, .tour-detail-card, .contact-form-box, .dest-spotlight-sec, .signature-section';
+    document.querySelectorAll(revealSelectors).forEach((el, index) => {
+      el.classList.add('reveal-on-scroll');
+      el.style.transitionDelay = `${(index % 3) * 0.12}s`;
+      revealObserver.observe(el);
+    });
+  }
+
+  // Button Click Ripple Micro-Animation
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn, button, .nav-link, .sovaba-hot-link, .btn-search-pill');
+    if (!btn) return;
+
+    const circle = document.createElement('span');
+    circle.classList.add('click-ripple-fx');
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    circle.style.width = circle.style.height = `${size}px`;
+    circle.style.left = `${e.clientX - rect.left - size / 2}px`;
+    circle.style.top = `${e.clientY - rect.top - size / 2}px`;
+
+    const existing = btn.querySelector('.click-ripple-fx');
+    if (existing) existing.remove();
+
+    btn.appendChild(circle);
+    setTimeout(() => circle.remove(), 600);
+  });
 });

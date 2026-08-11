@@ -29,6 +29,14 @@
 </head>
 <body>
 
+  <!-- Premium Page Loading Screen -->
+  <div id="page-preloader" aria-hidden="true">
+    <div class="preloader-content">
+      <img src="<?= asset('assets/images/vnu-logo-white.png') ?>" alt="Vietnam Unique Travel" class="preloader-logo">
+      <div class="preloader-spinner"></div>
+    </div>
+  </div>
+
   <?php require __DIR__ . '/header.php'; ?>
 
   <main id="main-content">
