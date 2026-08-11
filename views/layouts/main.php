@@ -45,10 +45,23 @@
 
   <?php require __DIR__ . '/footer.php'; ?>
 
-  <!-- Floating Contact Buttons -->
-  <div style="position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 12px;">
-    <a href="https://wa.me/84362191568" target="_blank" rel="noopener" style="background: #25D366; color: #FFF; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);" aria-label="Chat on WhatsApp">
+  <!-- Floating Speed-Dial Contact Buttons (Reference Style) -->
+  <div style="position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+    <!-- Phone -->
+    <a href="tel:+84362191568" style="background: #644732; color: #FFF; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); transition: transform 0.25s;" aria-label="Call Hotline" title="Call Us: +84 362 191 568">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+    </a>
+    <!-- WhatsApp -->
+    <a href="https://wa.me/84362191568" target="_blank" rel="noopener" style="background: #25D366; color: #FFF; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 4px 14px rgba(0,0,0,0.25); transition: transform 0.25s;" aria-label="Chat on WhatsApp" title="WhatsApp Us">
       💬
+    </a>
+    <!-- Zalo -->
+    <a href="https://zalo.me/84362191568" target="_blank" rel="noopener" style="background: #0068FF; color: #FFF; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.78rem; letter-spacing: -0.5px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); transition: transform 0.25s;" aria-label="Chat on Zalo" title="Zalo Support">
+      Zalo
+    </a>
+    <!-- Email -->
+    <a href="mailto:sales.vietnamuniquetravel@gmail.com" style="background: #C89539; color: #FFF; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); transition: transform 0.25s;" aria-label="Send Email" title="Email Us">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
     </a>
   </div>
 
