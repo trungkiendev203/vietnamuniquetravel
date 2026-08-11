@@ -82,14 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper to set Google Translate Cookie
     function setGTCookie(lang) {
       const hostname = window.location.hostname;
+      const docLang = (document.documentElement.lang || 'en').toLowerCase();
       if (lang === 'en' || lang === 'vi') {
         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + hostname;
         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + hostname;
       } else {
-        document.cookie = 'googtrans=/en/' + lang + '; path=/;';
+        document.cookie = 'googtrans=/' + docLang + '/' + lang + '; path=/;';
         document.cookie = 'googtrans=/auto/' + lang + '; path=/;';
-        document.cookie = 'googtrans=/en/' + lang + '; path=/; domain=' + hostname;
+        document.cookie = 'googtrans=/' + docLang + '/' + lang + '; path=/; domain=' + hostname;
         document.cookie = 'googtrans=/auto/' + lang + '; path=/; domain=' + hostname;
       }
     }

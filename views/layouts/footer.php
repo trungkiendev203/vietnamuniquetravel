@@ -73,7 +73,7 @@ $prefix = $currentLang === 'vi' ? 'vi/' : '';
 <script type="text/javascript">
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({
-    pageLanguage: 'en',
+    pageLanguage: '<?= $currentLang ?>',
     includedLanguages: 'en,vi,fr,de,ja,es,zh-CN,ko,it,ru',
     autoDisplay: false
   }, 'google_translate_element');
