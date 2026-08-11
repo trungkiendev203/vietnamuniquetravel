@@ -41,10 +41,10 @@ $prefix = $lang === 'vi' ? 'vi/' : '';
     <!-- Tour Grid -->
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px;">
       <?php foreach ($tours as $t): ?>
-        <div style="background: #FFF; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
-          <div style="position: relative;">
-            <img src="<?= asset($t['featured_image'] ?: 'assets/images/hero.webp') ?>" alt="<?= e($t['title']) ?>" style="height: 220px; width: 100%; object-fit: cover;">
-            <span style="position: absolute; top: 12px; right: 12px; background: var(--color-forest-dark); color: var(--color-gold); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">
+        <div class="tour-list-card">
+          <div style="position: relative; overflow: hidden;">
+            <img src="<?= asset($t['featured_image'] ?: 'assets/images/hero.webp') ?>" alt="<?= e($t['title']) ?>" class="tour-card-img">
+            <span class="tour-code-badge">
               <?= e($t['code']) ?>
             </span>
           </div>
@@ -54,7 +54,7 @@ $prefix = $lang === 'vi' ? 'vi/' : '';
               <?= e($t['destination_name'] ?: 'Pu Luong') ?>
             </div>
             <h3 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--color-text-dark); line-height: 1.3;">
-              <?= e($t['title']) ?>
+              <a href="<?= base_url($prefix . 'tours/' . $t['slug']) ?>" style="color: inherit; transition: color 0.2s;"><?= e($t['title']) ?></a>
             </h3>
             <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 20px; flex: 1;">
               <?= e($t['short_description']) ?>
@@ -66,7 +66,7 @@ $prefix = $lang === 'vi' ? 'vi/' : '';
                 <strong style="font-size: 1.2rem; color: var(--color-brand-green);"><?= format_price_usd($t['price_from_usd']) ?></strong>
                 <span style="font-size: 0.8rem; color: #888;">(<?= format_price_vnd($t['price_from_vnd']) ?>)</span>
               </div>
-              <a href="<?= base_url($prefix . 'tours/' . $t['slug']) ?>" class="btn btn-brand" style="padding: 8px 18px; font-size: 0.85rem;">View Tour &rarr;</a>
+              <a href="<?= base_url($prefix . 'tours/' . $t['slug']) ?>" class="btn btn-brand tour-card-btn" style="padding: 8px 18px; font-size: 0.85rem;">View Tour &rarr;</a>
             </div>
           </div>
         </div>
