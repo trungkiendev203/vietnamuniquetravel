@@ -161,8 +161,11 @@ $old = \App\Core\Session::flash('contact_old') ?? [];
               </div>
 
               <div class="form-group">
-                <label for="phone_whatsapp"><?= $isVi ? 'Số điện thoại / WhatsApp' : 'Phone / WhatsApp' ?></label>
-                <input type="text" id="phone_whatsapp" name="phone_whatsapp" class="form-control" value="<?= e($old['phone_whatsapp'] ?? '') ?>" placeholder="+84 362 191 568">
+                <label for="phone_whatsapp"><?= $isVi ? 'Số điện thoại / WhatsApp *' : 'Phone / WhatsApp *' ?></label>
+                <input type="text" id="phone_whatsapp" name="phone_whatsapp" class="form-control <?= isset($contactErrors['phone_whatsapp']) ? 'is-invalid' : '' ?>" value="<?= e($old['phone_whatsapp'] ?? '') ?>" placeholder="+84 362 191 568" required>
+                <?php if (isset($contactErrors['phone_whatsapp'])): ?>
+                  <div class="form-error-msg"><?= e($contactErrors['phone_whatsapp']) ?></div>
+                <?php endif; ?>
               </div>
             </div>
 

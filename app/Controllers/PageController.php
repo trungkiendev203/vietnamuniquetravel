@@ -100,6 +100,9 @@ class PageController extends Controller {
         if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = $lang === 'vi' ? 'Vui lòng nhập địa chỉ email hợp lệ.' : 'Valid Email Address is required.';
         }
+        if (empty($phone)) {
+            $errors['phone_whatsapp'] = $lang === 'vi' ? 'Vui lòng nhập số điện thoại / WhatsApp.' : 'Phone / WhatsApp is required.';
+        }
         if (empty($message)) {
             $errors['message'] = $lang === 'vi' ? 'Vui lòng nhập nội dung tin nhắn.' : 'Message content is required.';
         }
