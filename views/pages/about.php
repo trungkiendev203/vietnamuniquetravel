@@ -256,8 +256,8 @@ $prefix = $isVi ? 'vi/' : '';
   <section style="position: relative; background: url('<?= asset('assets/images/hero.webp') ?>') center/cover no-repeat; padding: 130px 0; text-align: center; color: #FFFFFF;">
     <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2, 47, 19, 0.75) 0%, rgba(0, 0, 0, 0.82) 100%);"></div>
     <div class="about-container" style="position: relative; z-index: 2;">
-      <h2 class="cta-artistic-heading">
-        <?= $isVi ? 'HÃY ĐỂ VIỆT NAM TRỞ THÀNH MỘT PHẦN<br>TRONG CÂU CHUYỆN CỦA BẠN.' : 'LET VIETNAM BECOME PART<br>OF YOUR STORY.' ?>
+      <h2 style="font-family: var(--font-heading); font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 800; color: #FFFFFF; margin-bottom: 32px; line-height: 1.25; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.6);">
+        <?= $isVi ? 'Hãy để Việt Nam trở thành một phần<br>trong câu chuyện của bạn.' : 'Let Vietnam become part<br>of your story.' ?>
       </h2>
       <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
         <a href="<?= base_url($prefix . 'tours') ?>" class="btn btn-gold"><?= __('btn_explore_tours') ?></a>
