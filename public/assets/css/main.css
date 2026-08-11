@@ -1836,13 +1836,9 @@ img {
   background: rgba(242, 201, 76, 0.12);
 }
 
-/* Hide Google Translate Banner & Popups Completely */
+/* Hide Google Translate Top Banner & Tooltips Without Breaking Worker Iframe */
 .goog-te-banner-frame,
-.goog-te-banner-frame.skiptranslate,
 iframe.goog-te-banner-frame,
-iframe.skiptranslate,
-iframe[id*=":1.container"],
-iframe[id*=":2.container"],
 .VIpgJd-Z44fyf-V77wed-b9VOHc,
 .VIpgJd-Z44fyf-V77wed,
 .VIpgJd-Z44fyf-O22p2-O0vWhd,
@@ -1855,9 +1851,6 @@ iframe[id*=":2.container"],
   opacity: 0 !important;
   height: 0 !important;
   width: 0 !important;
-  position: absolute !important;
-  top: -9999px !important;
-  left: -9999px !important;
   pointer-events: none !important;
 }
 
@@ -1872,9 +1865,13 @@ body, html {
   box-shadow: none !important;
 }
 
-#google_translate_element,
-.goog-te-gadget,
-.goog-te-gadget-simple {
-  display: none !important;
-  visibility: hidden !important;
+#google_translate_element {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }

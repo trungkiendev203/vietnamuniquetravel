@@ -69,7 +69,7 @@ $prefix = $currentLang === 'vi' ? 'vi/' : '';
 </footer>
 
 <!-- Google Translate Element Initialization -->
-<div id="google_translate_element" style="display:none; visibility:hidden;"></div>
+<div id="google_translate_element" style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none;"></div>
 <script type="text/javascript">
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({

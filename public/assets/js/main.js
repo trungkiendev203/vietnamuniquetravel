@@ -85,9 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (lang === 'en' || lang === 'vi') {
         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + hostname;
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + hostname;
       } else {
         document.cookie = 'googtrans=/en/' + lang + '; path=/;';
+        document.cookie = 'googtrans=/auto/' + lang + '; path=/;';
         document.cookie = 'googtrans=/en/' + lang + '; path=/; domain=' + hostname;
+        document.cookie = 'googtrans=/auto/' + lang + '; path=/; domain=' + hostname;
       }
     }
 
@@ -150,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const combo = document.querySelector('.goog-te-combo');
           if (combo) {
             combo.value = lang;
-            combo.dispatchEvent(new Event('change'));
+            combo.dispatchEvent(new Event('change', { bubbles: true }));
           } else {
             window.location.reload();
           }
@@ -159,22 +162,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Active Google Translate Banner Removal
+  // Hide Google Translate Top Banner without removing worker iframe
   function killGTBanner() {
-    const selector = 'iframe.goog-te-banner-frame, iframe.skiptranslate, iframe[id*=":1.container"], iframe[id*=":2.container"], .VIpgJd-Z44fyf-V77wed-b9VOHc, .VIpgJd-Z44fyf-V77wed, .VIpgJd-Z44fyf-O22p2-O0vWhd';
+    const selector = '.goog-te-banner-frame, iframe.goog-te-banner-frame, .VIpgJd-Z44fyf-V77wed-b9VOHc, .VIpgJd-Z44fyf-V77wed, .VIpgJd-Z44fyf-O22p2-O0vWhd';
     const frames = document.querySelectorAll(selector);
     frames.forEach(frame => {
       frame.style.setProperty('display', 'none', 'important');
       frame.style.setProperty('visibility', 'hidden', 'important');
       frame.style.setProperty('height', '0px', 'important');
-      if (frame.parentNode) {
-        frame.parentNode.removeChild(frame);
-      }
+      frame.style.setProperty('opacity', '0', 'important');
     });
     if (document.body && document.body.style.top !== '0px') {
       document.body.style.top = '0px';
     }
   }
 
-  setInterval(killGTBanner, 150);
+  setInterval(killGTBanner, 200);
 });
