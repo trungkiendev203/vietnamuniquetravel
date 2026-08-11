@@ -32,8 +32,7 @@ $viSwitchUrl = base_url('vi/' . $viSwitchPath);
   
   <!-- Far Left Corner Logo -->
     <a href="<?= base_url($prefix) ?>" class="brand-logo-far-left" aria-label="Vietnam Unique Travel">
-      <img src="<?= asset('assets/images/vnu-logo-white.png') ?>" alt="Vietnam Unique Travel" class="logo-light-variant">
-      <img src="<?= asset('assets/images/vnu-logo-transparent.png') ?>" alt="Vietnam Unique Travel" class="logo-dark-variant">
+      <img src="<?= asset('assets/images/vnu-logo-original.png') ?>" alt="Vietnam Unique Travel">
     </a>
 
   <div class="container nav-wrapper">
@@ -113,7 +112,7 @@ $viSwitchUrl = base_url('vi/' . $viSwitchPath);
 <div class="drawer-overlay"></div>
 <div class="mobile-drawer" role="dialog" aria-modal="true">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-    <img src="<?= asset('assets/images/vnu-logo-white.png') ?>" alt="Vietnam Unique Travel" style="height: 55px; width: auto;">
+    <img src="<?= asset('assets/images/vnu-logo-original.png') ?>" alt="Vietnam Unique Travel" style="height: 50px; width: auto; border-radius: 8px;">
     <button class="drawer-close" style="background: none; border: none; color: #FFF; font-size: 2rem; cursor: pointer;">&times;</button>
   </div>
   <ul style="list-style: none; display: flex; flex-direction: column; gap: 20px;">
