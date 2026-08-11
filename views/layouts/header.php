@@ -31,9 +31,10 @@ $viSwitchUrl = base_url('vi/' . $viSwitchPath);
 <header class="site-header <?= $isLightHeaderPage ? 'header-light' : '' ?>">
   
   <!-- Far Left Corner Logo -->
-  <a href="<?= base_url($prefix) ?>" class="brand-logo-far-left" aria-label="Vietnam Unique Travel">
-    <img src="<?= asset('assets/images/Unique-Travel-Full-Color-Transparent.png') ?>" alt="Vietnam Unique Travel">
-  </a>
+    <a href="<?= base_url($prefix) ?>" class="brand-logo-far-left" aria-label="Vietnam Unique Travel">
+      <img src="<?= asset('assets/images/vnu-logo-white.png') ?>" alt="Vietnam Unique Travel" class="logo-light-variant">
+      <img src="<?= asset('assets/images/vnu-logo-transparent.png') ?>" alt="Vietnam Unique Travel" class="logo-dark-variant">
+    </a>
 
   <div class="container nav-wrapper">
     <!-- Header Menu Links (Home, Tours, About us, Contact us) -->
@@ -112,7 +113,7 @@ $viSwitchUrl = base_url('vi/' . $viSwitchPath);
 <div class="drawer-overlay"></div>
 <div class="mobile-drawer" role="dialog" aria-modal="true">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-    <img src="<?= asset('assets/images/Unique-Travel-Full-Color-Transparent.png') ?>" alt="Vietnam Unique Travel" style="height: 60px; width: auto; border-radius: 10px;">
+    <img src="<?= asset('assets/images/vnu-logo-white.png') ?>" alt="Vietnam Unique Travel" style="height: 55px; width: auto;">
     <button class="drawer-close" style="background: none; border: none; color: #FFF; font-size: 2rem; cursor: pointer;">&times;</button>
   </div>
   <ul style="list-style: none; display: flex; flex-direction: column; gap: 20px;">
