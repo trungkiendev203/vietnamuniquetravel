@@ -92,34 +92,78 @@ $prefix = $isVi ? 'vi/' : '';
     </div>
   </section>
 
-  <!-- 4. Vision & Mission (Deep Forest Green Background) -->
-  <section class="vision-mission-sec">
-    <div class="about-container">
-      <div class="vm-grid">
-        
-        <div>
-          <div class="vm-num">01</div>
-          <div class="vm-label"><?= $isVi ? 'TẦM NHÌN' : 'OUR VISION' ?></div>
-          <h3 class="vm-h3"><?= $isVi ? 'Thương hiệu lữ hành uy tín' : 'Trusted Authentic Journeys' ?></h3>
-          <p class="vm-desc">
-            <?= $isVi 
-              ? 'Trở thành một trong những thương hiệu lữ hành uy tín của Việt Nam, được khách hàng quốc tế tin tưởng lựa chọn nhờ những hành trình trải nghiệm chân thực, khác biệt và bền vững.' 
-              : 'To become a leading trusted travel brand in Vietnam, chosen by international travelers for authentic, distinct, and sustainable travel experiences.' ?>
-          </p>
-        </div>
+  <!-- 4. Vision & Mission (Premium Eco-Luxury Editorial Section) -->
+  <section class="vision-mission-sec" aria-label="Vision and Mission">
+    <!-- Decorative Background Elements -->
+    <div class="vm-bg-watermark" aria-hidden="true">PURPOSE</div>
+    <svg class="vm-bg-contours" viewBox="0 0 1440 600" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M-100 200 C300 100, 700 350, 1540 150" stroke="rgba(255,255,255,0.035)" stroke-width="1.5"/>
+      <path d="M-100 350 C400 250, 800 450, 1540 300" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/>
+      <path d="M-100 500 C500 400, 900 550, 1540 450" stroke="rgba(255,255,255,0.025)" stroke-width="1.5"/>
+    </svg>
 
-        <div>
-          <div class="vm-num">02</div>
-          <div class="vm-label"><?= $isVi ? 'SỨ MỆNH' : 'OUR MISSION' ?></div>
-          <h3 class="vm-h3"><?= $isVi ? 'Kết nối & Phát triển bền vững' : 'Connecting & Preserving' ?></h3>
-          <p class="vm-desc">
-            <?= $isVi 
-              ? 'Mang vẻ đẹp thiên nhiên và văn hóa Việt Nam đến gần hơn với bạn bè quốc tế, thúc đẩy du lịch có trách nhiệm, góp phần bảo tồn văn hóa truyền thống, bảo vệ môi trường và tạo sinh kế bền vững cho cộng đồng địa phương.' 
-              : 'Bringing Vietnam’s natural and cultural beauty closer to global friends, fostering responsible travel that protects pristine ecosystems, preserves ethnic traditions, and supports sustainable local livelihoods.' ?>
-          </p>
-        </div>
+    <div class="about-container vm-container">
+      
+      <!-- Section Header -->
+      <header class="vm-header">
+        <span class="vm-eyebrow">
+          <span class="vm-eyebrow-line" aria-hidden="true"></span>
+          <?= $isVi ? 'ĐỘNG LỰC CỦA CHÚNG TÔI' : 'WHAT DRIVES US' ?>
+        </span>
+        <h2 class="vm-title">
+          <span class="vm-title-main"><?= $isVi ? 'Du lịch có mục đích.' : 'Travel with purpose.' ?></span>
+          <span class="vm-title-sub"><?= $isVi ? 'Để lại dấu chân tích cực.' : 'Leave a positive footprint.' ?></span>
+        </h2>
+        <p class="vm-intro">
+          <?= $isVi 
+            ? 'Chúng tôi kiến tạo những hành trình đầy ý nghĩa, kết nối du khách với tâm hồn Việt Nam đồng thời gìn giữ vẻ đẹp diệu kỳ của mỗi điểm đến.' 
+            : 'We create meaningful journeys that connect travelers with the soul of Vietnam while protecting what makes each destination extraordinary.' ?>
+        </p>
+      </header>
+
+      <!-- Editorial Grid: 2 Distinct Cards -->
+      <div class="vm-editorial-grid">
+        
+        <!-- CARD 01: VISION -->
+        <article class="vm-card vm-card-vision">
+          <div>
+            <div class="vm-card-badge">
+              <span class="vm-card-num">01</span>
+              <span class="vm-card-label"><?= $isVi ? 'OUR VISION — TẦM NHÌN' : '01 — OUR VISION' ?></span>
+            </div>
+            <h3 class="vm-card-h3"><?= $isVi ? 'Thương hiệu lữ hành uy tín' : 'Trusted Authentic Journeys' ?></h3>
+            <p class="vm-card-quote">
+              “<?= $isVi 
+                ? 'Trở thành một trong những thương hiệu lữ hành uy tín của Việt Nam, được khách hàng quốc tế tin tưởng lựa chọn nhờ những hành trình trải nghiệm chân thực, khác biệt và bền vững.' 
+                : 'To become a leading trusted travel brand in Vietnam, chosen by international travelers for authentic, distinct, and sustainable travel experiences.' ?>”
+            </p>
+          </div>
+          <div class="vm-card-footer">
+            <span class="vm-tag-pill"><?= $isVi ? 'Chân thực & Bền vững' : 'Authentic & Sustainable' ?></span>
+          </div>
+        </article>
+
+        <!-- CARD 02: MISSION -->
+        <article class="vm-card vm-card-mission">
+          <div>
+            <div class="vm-card-badge">
+              <span class="vm-card-num">02</span>
+              <span class="vm-card-label"><?= $isVi ? 'OUR MISSION — SỨ MỆNH' : '02 — OUR MISSION' ?></span>
+            </div>
+            <h3 class="vm-card-h3"><?= $isVi ? 'Kết nối & Bảo tồn văn hóa' : 'Connecting & Preserving' ?></h3>
+            <p class="vm-card-quote">
+              “<?= $isVi 
+                ? 'Mang vẻ đẹp thiên nhiên và văn hóa Việt Nam đến gần hơn với bạn bè quốc tế, thúc đẩy du lịch có trách nhiệm, góp phần bảo tồn văn hóa truyền thống, bảo vệ môi trường và tạo sinh kế bền vững cho cộng đồng địa phương.' 
+                : 'Bringing Vietnam’s natural and cultural beauty closer to global friends, fostering responsible travel that protects pristine ecosystems, preserves ethnic traditions, and supports sustainable local livelihoods.' ?>”
+            </p>
+          </div>
+          <div class="vm-card-footer">
+            <span class="vm-tag-pill"><?= $isVi ? 'Bảo tồn & Cộng đồng' : 'Ecosystems & Livelihoods' ?></span>
+          </div>
+        </article>
 
       </div>
+
     </div>
   </section>
 
