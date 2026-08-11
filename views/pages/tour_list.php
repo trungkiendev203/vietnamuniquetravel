@@ -15,27 +15,27 @@ $prefix = $lang === 'vi' ? 'vi/' : '';
     
     <!-- Filter bar -->
     <form action="<?= base_url($prefix . 'tours') ?>" method="GET" style="background: #FFF; padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 40px; align-items: center;">
-      <select name="destination" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); flex: 1;">
+      <select name="destination" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); flex: 1; font-family: var(--font-heading); font-size: 0.95rem;">
         <option value="">All Destinations</option>
         <?php foreach ($destinations as $d): ?>
           <option value="<?= $d['id'] ?>" <?= isset($_GET['destination']) && $_GET['destination'] == $d['id'] ? 'selected' : '' ?>><?= e($d['name']) ?></option>
         <?php endforeach; ?>
       </select>
 
-      <select name="duration" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); flex: 1;">
+      <select name="duration" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); flex: 1; font-family: var(--font-heading); font-size: 0.95rem;">
         <option value="">All Durations</option>
         <option value="halfday" <?= isset($_GET['duration']) && $_GET['duration'] === 'halfday' ? 'selected' : '' ?>>Half-Day</option>
         <option value="fullday" <?= isset($_GET['duration']) && $_GET['duration'] === 'fullday' ? 'selected' : '' ?>>Full-Day</option>
       </select>
 
-      <select name="difficulty" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); flex: 1;">
+      <select name="difficulty" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); flex: 1; font-family: var(--font-heading); font-size: 0.95rem;">
         <option value="">All Difficulties</option>
         <option value="easy" <?= isset($_GET['difficulty']) && $_GET['difficulty'] === 'easy' ? 'selected' : '' ?>>Easy</option>
         <option value="medium" <?= isset($_GET['difficulty']) && $_GET['difficulty'] === 'medium' ? 'selected' : '' ?>>Medium</option>
         <option value="hard" <?= isset($_GET['difficulty']) && $_GET['difficulty'] === 'hard' ? 'selected' : '' ?>>Hard</option>
       </select>
 
-      <button type="submit" class="btn btn-brand" style="padding: 10px 24px;">Filter</button>
+      <button type="submit" class="btn btn-brand" style="padding: 10px 24px; font-family: var(--font-heading);">Filter</button>
     </form>
 
     <!-- Tour Grid -->

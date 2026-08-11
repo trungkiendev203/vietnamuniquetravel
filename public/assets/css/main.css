@@ -48,11 +48,15 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, input, select, textarea, button, option {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.25;
   color: var(--color-text-dark);
+}
+
+input, select, textarea, button, option {
+  font-family: var(--font-heading);
 }
 
 a {
