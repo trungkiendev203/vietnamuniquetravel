@@ -8,8 +8,8 @@ $prefix = $currentLang === 'vi' ? 'vi/' : '';
       
       <!-- Col 1: Brand Info -->
       <div>
-        <div style="margin-bottom: 20px;">
-          <img src="<?= asset('assets/images/vnu-logo-white.png') ?>" alt="Vietnam Unique Travel" style="height: 100px; width: auto; object-fit: contain;">
+        <div style="margin-bottom: 20px; text-align: center;">
+          <img src="<?= asset('assets/images/vnu-logo-white.png') ?>" alt="Vietnam Unique Travel" style="height: 105px; width: auto; object-fit: contain; margin: 0 auto; display: block;">
         </div>
         <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-bottom: 16px;">
           <strong>CÔNG TY CỔ PHẦN DU LỊCH THÀNH HƯNG</strong><br>
