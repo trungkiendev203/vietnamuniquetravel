@@ -26,7 +26,12 @@ if (!function_exists('env')) {
 
 if (!function_exists('base_url')) {
     function base_url($path = '') {
-        $baseUrl = rtrim(env('APP_URL', 'http://localhost:8000'), '/');
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? 'https' : 'http';
+        if (isset($_SERVER['HTTP_HOST'])) {
+            $baseUrl = $protocol . '://' . $_SERVER['HTTP_HOST'];
+        } else {
+            $baseUrl = rtrim(env('APP_URL', 'http://localhost:8000'), '/');
+        }
         $path = ltrim($path, '/');
         return $path ? $baseUrl . '/' . $path : $baseUrl;
     }

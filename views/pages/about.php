@@ -210,7 +210,7 @@ $prefix = $isVi ? 'vi/' : '';
 
   <!-- 7. Full-Width Nature Photo CTA -->
   <section style="position: relative; background: url('<?= asset('assets/images/hero.webp') ?>') center/cover no-repeat; padding: 120px 0; text-align: center; color: #FFFFFF;">
-    <div style="position: absolute; inset: 0; background: linear-gradient(rgba(2, 47, 19, 0.8), rgba(2, 47, 19, 0.86));"></div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55));"></div>
     <div class="about-container" style="position: relative; z-index: 2;">
       <h2 style="font-family: var(--font-heading); font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 800; margin-bottom: 28px; line-height: 1.2;">
         <?= $isVi ? 'Hãy để Việt Nam trở thành một phần<br>trong câu chuyện của bạn.' : 'Let Vietnam become part<br>of your story.' ?>

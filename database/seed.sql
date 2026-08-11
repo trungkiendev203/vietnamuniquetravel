@@ -146,7 +146,47 @@ INSERT IGNORE INTO `tour_translations` (`tour_id`, `lang`, `title`, `sub_title`,
  '• Trẻ em >=10 tuổi tính như người lớn. Trẻ 6-9 tuổi tính 50% người lớn (cho phương án đi ô tô).', 
  '• Hủy trước 24 giờ không mất phí.', 
  'Tour Chợ Phiên Phố Đoàn & Thác Hiêu Pù Luông | VNU', 
- 'Hành trình nửa ngày trải nghiệm chợ Phố Đoàn, thác Hiêu và làng dệt dệt thổ cẩm bản Lan.');
+ 'Hành trình nửa ngày trải nghiệm chợ Phố Đoàn, thác Hiêu và làng dệt dệt thổ cẩm bản Lan.'),
+
+(3, 'en',
+ 'PLHDT – 03: TREKKING TOURS: Authentic Village Life Experience',
+ 'Half-Day Walking & Cultural Trek through Don & Bang Villages',
+ 'Immerse yourself in peaceful Thai ethnic stilt houses, emerald rice terraces, and traditional bamboo water wheels.',
+ '• Easy walking trek through serene rice fields and historic Thai minority villages.
+• Meet local Thai families and learn about centuries-old rice farming techniques.
+• Discover iconic bamboo water wheels along the Cham river.
+• Enjoy complimentary mountain tea and local tropical fruits.',
+ 'A light half-day trekking experience taking you off the beaten path into pristine Thai villages. Walk past cascading rice terraces and wooden stilt homes surrounded by lush bamboo groves.',
+ '• Mineral water & local guide
+• Tropical fruits tasting',
+ '• Personal expenses & tips
+• Travel insurance',
+ '• Comfortable walking shoes
+• Sun hat & camera',
+ '• Children 5+ pay adult price.',
+ '• Free cancellation up to 24 hours prior.',
+ 'Authentic Village Life Trekking Tour | Vietnam Unique Travel',
+ 'Book PLHDT-03 half-day walking trek through traditional Pu Luong stilt villages.'),
+
+(3, 'vi',
+ 'PLHDT – 03: TOUR TREKKING: Trải Nghiệm Cuộc Sống Bản Đón & Bản Báng',
+ 'Trekking nửa ngày khám phá nét đẹp bình yên bản làng người Thái',
+ 'Hòa mình vào khung cảnh nhà sàn thanh bình, ruộng bậc thang xanh mướt và guồng nước bằng tre độc đáo dọc dòng suối Cham.',
+ '• Trekking nhẹ nhàng qua ruộng bậc thang và bản làng Thái cổ kính.
+• Giao lưu cùng người dân bản địa và tìm hiểu canh tác lúa nước lâu đời.
+• Check-in guồng nước cọn tre khổng lồ bên dòng suối mát lành.
+• Thưởng thức trà núi và hoa quả tươi tại nhà sàn truyền thống.',
+ 'Hành trình nửa ngày đi bộ ngắm cảnh đưa du khách len lỏi qua những lối nhỏ bình yên. Ngắm nhìn ruộng bậc thang nối tiếp nhau và lắng nghe tiếng suối reo cùng âm thanh yên bình của núi rừng Pù Luông.',
+ '• Nước uống & Hướng dẫn viên bản địa
+• Thưởng thức hoa quả tươi',
+ '• Chi phí cá nhân & tiền tip
+• Bảo hiểm du lịch',
+ '• Giày đi bộ thoải mái
+• Mũ che nắng & máy ảnh',
+ '• Trẻ em từ 5 tuổi tính giá người lớn.',
+ '• Hủy trước 24 giờ miễn phí.',
+ 'Tour Trekking Khám Phá Bản Đón Pù Luông | Vietnam Unique Travel',
+ 'Đặt tour trekking nửa ngày PLHDT-03 trải nghiệm cuộc sống người Thái Pù Luông.');
 
 -- 6. Tour Categories Linking
 INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES

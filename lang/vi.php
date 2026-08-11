@@ -11,7 +11,7 @@ return [
     'nav_blog' => 'Cẩm nang du lịch',
     'nav_contact' => 'Liên hệ',
     'nav_faq' => 'Hỏi đáp',
-    'btn_book_tour' => 'Đặt Tour',
+    'btn_book_tour' => 'Tùy chỉnh Tour',
     'btn_explore_tours' => 'Khám phá Tour',
     'btn_plan_trip' => 'Lên kế hoạch',
 

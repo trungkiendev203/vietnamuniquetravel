@@ -8,9 +8,14 @@ class Tour extends Model {
     protected string $table = 'tours';
 
     public function getAll(string $lang = 'en', array $filters = []): array {
-        $sql = "SELECT t.*, tt.title, tt.sub_title, tt.short_description, dt.name as destination_name
+        $sql = "SELECT t.*, 
+                       COALESCE(tt.title, tt_en.title, t.code) as title, 
+                       COALESCE(tt.sub_title, tt_en.sub_title) as sub_title, 
+                       COALESCE(tt.short_description, tt_en.short_description) as short_description, 
+                       dt.name as destination_name
                 FROM tours t
                 LEFT JOIN tour_translations tt ON t.id = tt.tour_id AND tt.lang = :lang1
+                LEFT JOIN tour_translations tt_en ON t.id = tt_en.tour_id AND tt_en.lang = 'en'
                 LEFT JOIN destination_translations dt ON t.destination_id = dt.destination_id AND dt.lang = :lang2
                 WHERE t.status = 1";
         
@@ -52,12 +57,23 @@ class Tour extends Model {
     }
 
     public function getBySlug(string $slug, string $lang = 'en'): ?array {
-        $sql = "SELECT t.*, tt.title, tt.sub_title, tt.short_description, tt.highlights, 
-                       tt.overview, tt.inclusions, tt.exclusions, tt.what_to_bring, 
-                       tt.child_policy, tt.cancellation_policy, tt.seo_title, tt.seo_description,
+        $sql = "SELECT t.*, 
+                       COALESCE(tt.title, tt_en.title, t.code) as title, 
+                       COALESCE(tt.sub_title, tt_en.sub_title) as sub_title, 
+                       COALESCE(tt.short_description, tt_en.short_description) as short_description, 
+                       COALESCE(tt.highlights, tt_en.highlights) as highlights, 
+                       COALESCE(tt.overview, tt_en.overview) as overview, 
+                       COALESCE(tt.inclusions, tt_en.inclusions) as inclusions, 
+                       COALESCE(tt.exclusions, tt_en.exclusions) as exclusions, 
+                       COALESCE(tt.what_to_bring, tt_en.what_to_bring) as what_to_bring, 
+                       COALESCE(tt.child_policy, tt_en.child_policy) as child_policy, 
+                       COALESCE(tt.cancellation_policy, tt_en.cancellation_policy) as cancellation_policy, 
+                       COALESCE(tt.seo_title, tt_en.seo_title) as seo_title, 
+                       COALESCE(tt.seo_description, tt_en.seo_description) as seo_description,
                        dt.name as destination_name
                 FROM tours t
                 LEFT JOIN tour_translations tt ON t.id = tt.tour_id AND tt.lang = :lang1
+                LEFT JOIN tour_translations tt_en ON t.id = tt_en.tour_id AND tt_en.lang = 'en'
                 LEFT JOIN destination_translations dt ON t.destination_id = dt.destination_id AND dt.lang = :lang2
                 WHERE t.slug = :slug AND t.status = 1";
 

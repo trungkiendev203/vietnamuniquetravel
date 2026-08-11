@@ -9,9 +9,9 @@ return [
     'nav_about' => 'About Us',
     'nav_responsible' => 'Responsible Tourism',
     'nav_blog' => 'Travel Guide',
-    'nav_contact' => 'Contact',
+    'nav_contact' => 'Contact Us',
     'nav_faq' => 'FAQ',
-    'btn_book_tour' => 'Book a Tour',
+    'btn_book_tour' => 'Customize Tour',
     'btn_explore_tours' => 'Explore Our Tours',
     'btn_plan_trip' => 'Plan Your Trip',
 

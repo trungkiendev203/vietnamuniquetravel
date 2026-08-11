@@ -4,6 +4,9 @@ $prefix = $currentLang === 'vi' ? 'vi/' : '';
 $currentPath = ltrim($_SERVER['REQUEST_URI'] ?? '', '/');
 $currentPathWithoutLang = preg_replace('#^(en|vi)/?#i', '', $currentPath);
 
+$isHomePage = empty($currentPathWithoutLang);
+$isToursPage = (bool)preg_match('#^tours/?$#i', $currentPathWithoutLang);
+
 $isAboutPage = (bool)preg_match('#^(about-us|ve-chung-toi)#i', $currentPathWithoutLang);
 $aboutUrl = base_url($currentLang === 'vi' ? 'vi/ve-chung-toi' : 'about-us');
 
@@ -33,23 +36,25 @@ $viSwitchUrl = base_url('vi/' . $viSwitchPath);
   </a>
 
   <div class="container nav-wrapper">
-    <!-- Right Side Menu Links -->
+    <!-- Header Menu Links (Home, Tours, About us, Contact us) -->
     <ul class="nav-menu">
-      <li><a href="<?= base_url($prefix) ?>" class="nav-link"><?= __('nav_home') ?></a></li>
-      <li><a href="<?= base_url($prefix . 'tours') ?>" class="nav-link"><?= __('nav_tours') ?></a></li>
-      <li><a href="<?= base_url($prefix . 'destinations') ?>" class="nav-link"><?= __('nav_destinations') ?></a></li>
-      <li><a href="<?= base_url($prefix . 'experiences') ?>" class="nav-link"><?= __('nav_experiences') ?></a></li>
+      <li><a href="<?= base_url($prefix) ?>" class="nav-link <?= $isHomePage ? 'active' : '' ?>"><?= __('nav_home') ?></a></li>
+      <li><a href="<?= base_url($prefix . 'tours') ?>" class="nav-link <?= $isToursPage ? 'active' : '' ?>"><?= __('nav_tours') ?></a></li>
       <li><a href="<?= $aboutUrl ?>" class="nav-link <?= $isAboutPage ? 'active' : '' ?>"><?= __('nav_about') ?></a></li>
-      <li><a href="<?= base_url($prefix . 'responsible-tourism') ?>" class="nav-link"><?= __('nav_responsible') ?></a></li>
-      <li><a href="<?= base_url($prefix . 'blog') ?>" class="nav-link"><?= __('nav_blog') ?></a></li>
       <li><a href="<?= $contactUrl ?>" class="nav-link <?= $isContactPage ? 'active' : '' ?>"><?= __('nav_contact') ?></a></li>
     </ul>
 
     <div style="display: flex; align-items: center; gap: 14px; flex-shrink: 0;">
       <div class="lang-switch">
-        <a href="<?= $enSwitchUrl ?>" class="<?= $currentLang === 'en' ? 'active' : '' ?>">EN</a>
+        <a href="<?= $enSwitchUrl ?>" class="<?= $currentLang === 'en' ? 'active' : '' ?>" title="English">
+          <img src="https://flagcdn.com/w40/gb.png" alt="English" class="flag-icon">
+          <span>EN</span>
+        </a>
         <span>|</span>
-        <a href="<?= $viSwitchUrl ?>" class="<?= $currentLang === 'vi' ? 'active' : '' ?>">VI</a>
+        <a href="<?= $viSwitchUrl ?>" class="<?= $currentLang === 'vi' ? 'active' : '' ?>" title="Tiếng Việt">
+          <img src="https://flagcdn.com/w40/vn.png" alt="Tiếng Việt" class="flag-icon">
+          <span>VI</span>
+        </a>
       </div>
 
       <a href="<?= base_url($prefix . 'booking') ?>" class="btn btn-gold" style="padding: 9px 18px; font-size: 0.85rem;"><?= __('btn_book_tour') ?></a>
