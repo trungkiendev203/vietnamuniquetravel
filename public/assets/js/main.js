@@ -215,24 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
       el.style.transitionDelay = `${(index % 3) * 0.12}s`;
       revealObserver.observe(el);
     });
-
-    // Text Reveal Typography Animations (Blur-Unblur & Slide-Up)
-    const textObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('text-is-revealed');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
-
-    const textSelectors = 'h1, h2, h3, .why-title-white, .vm-title, .artistic-cta-title, .vm-eyebrow, .sovaba-hot-header';
-    document.querySelectorAll(textSelectors).forEach((el) => {
-      if (!el.closest('#page-preloader')) {
-        el.classList.add('text-reveal-fx');
-        textObserver.observe(el);
-      }
-    });
   }
 
   // Button Click Ripple Micro-Animation

@@ -2035,22 +2035,6 @@ body, html {
   }
 }
 
-/* 4. Text Reveal Typography Animations */
-.text-reveal-fx {
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s ease;
-  will-change: opacity, transform, filter;
-}
 
-.text-reveal-fx:not(.text-is-revealed) {
-  opacity: 0;
-  transform: translateY(28px);
-  filter: blur(6px);
-}
-
-.text-reveal-fx.text-is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
 
 
