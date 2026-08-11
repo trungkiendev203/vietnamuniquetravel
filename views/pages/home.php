@@ -200,12 +200,14 @@ $prefix = $isVi ? 'vi/' : '';
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
       <?php foreach ($categories as $cat): ?>
-        <div style="background: #FFF; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); transition: transform var(--transition-fast);">
-          <img src="<?= asset($cat['image'] ?: 'assets/images/hero.webp') ?>" alt="<?= e($cat['name']) ?>" style="height: 200px; width: 100%; object-fit: cover;">
+        <div class="exp-card">
+          <div style="position: relative; overflow: hidden;">
+            <img src="<?= asset($cat['image'] ?: 'assets/images/hero.webp') ?>" alt="<?= e($cat['name']) ?>" class="exp-card-img">
+          </div>
           <div style="padding: 24px;">
             <h3 style="font-size: 1.3rem; margin-bottom: 10px; color: var(--color-brand-green);"><?= e($cat['name']) ?></h3>
             <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 16px;"><?= e($cat['description']) ?></p>
-            <a href="<?= base_url($prefix . 'experiences') ?>" style="color: var(--color-brand-green); font-weight: 700; font-size: 0.9rem;">Discover Activities &rarr;</a>
+            <a href="<?= base_url($prefix . 'experiences') ?>" class="exp-card-link">Discover Activities &rarr;</a>
           </div>
         </div>
       <?php endforeach; ?>
