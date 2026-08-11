@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@600;700&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Pinyon+Script&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
   --color-forest-dark: #022F13;
@@ -13,7 +13,7 @@
   --color-border: #E2E8E4;
 
   --font-heading: 'DM Serif Display', Georgia, serif;
-  --font-handwriting: 'Alex Brush', 'Caveat', cursive, serif;
+  --font-handwriting: 'Pinyon Script', 'Alex Brush', 'Great Vibes', cursive, serif;
   --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   --radius-sm: 8px;
@@ -1896,6 +1896,19 @@ body, html {
   overflow: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
+}
+
+/* Luxury Calligraphic Handwriting CTA Heading */
+.artistic-cta-title {
+  font-family: var(--font-handwriting);
+  font-size: clamp(3.2rem, 6vw, 5.2rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.85);
+  margin-bottom: 32px;
+  text-transform: none;
 }
 
 
