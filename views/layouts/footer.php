@@ -9,7 +9,7 @@ $prefix = $currentLang === 'vi' ? 'vi/' : '';
       <!-- Col 1: Brand Info -->
       <div>
         <div style="margin-bottom: 20px;">
-          <img src="<?= asset('assets/images/Unique-Travel-Full-Color-Transparent.png') ?>" alt="Vietnam Unique Travel" style="height: 100px; width: auto; object-fit: contain;">
+          <img src="<?= asset('assets/images/Unique-Travel-Full-Color-Transparent.png') ?>" alt="Vietnam Unique Travel" style="height: 105px; width: auto; object-fit: contain; border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.25);">
         </div>
         <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-bottom: 16px;">
           <strong>CÔNG TY CỔ PHẦN DU LỊCH THÀNH HƯNG</strong><br>
