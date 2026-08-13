@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\Language;
+use App\Core\Cache;
 use App\Models\Destination;
 use App\Models\Tour;
 
@@ -11,7 +12,9 @@ class DestinationController extends Controller {
     public function list(): void {
         $lang = Language::current();
         $destModel = new Destination();
-        $destinations = $destModel->getAll($lang);
+        $destinations = Cache::remember("destinations_list_{$lang}", 3600, function() use ($destModel, $lang) {
+            return $destModel->getAll($lang);
+        });
 
         $seo = [
             'title' => __('nav_destinations') . ' - Vietnam Unique Travel',
@@ -27,14 +30,20 @@ class DestinationController extends Controller {
         $destModel = new Destination();
         $tourModel = new Tour();
 
-        $destination = $destModel->getBySlug($slug, $lang);
+        $destination = Cache::remember("destination_detail_{$slug}_{$lang}", 3600, function() use ($destModel, $slug, $lang) {
+            return $destModel->getBySlug($slug, $lang);
+        });
+
         if (!$destination) {
             $this->response->setStatusCode(404);
             $this->render('pages/404');
             return;
         }
 
-        $tours = $tourModel->getAll($lang, ['destination' => $destination['id']]);
+        $destId = $destination['id'];
+        $tours = Cache::remember("destination_tours_{$destId}_{$lang}", 3600, function() use ($tourModel, $lang, $destId) {
+            return $tourModel->getAll($lang, ['destination' => $destId]);
+        });
 
         $seo = [
             'title' => ($destination['seo_title'] ?: $destination['name']) . ' - Vietnam Unique Travel',

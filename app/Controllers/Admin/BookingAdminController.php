@@ -6,6 +6,7 @@ use App\Core\Controller;
 use App\Core\Session;
 use App\Core\Csrf;
 use App\Models\Booking;
+use App\Models\Notification;
 
 class BookingAdminController extends Controller {
     public function __construct() {
@@ -37,13 +38,17 @@ class BookingAdminController extends Controller {
             return;
         }
 
+        // Automatically mark notification as read when viewing booking detail
+        $notifModel = new Notification();
+        $notifModel->execute("UPDATE admin_notifications SET is_read = 1 WHERE booking_id = :bid", ['bid' => $booking['id']]);
+
         $seo = ['title' => 'Booking ' . $code . ' - Admin'];
         $this->render('admin/bookings/detail', compact('booking', 'seo'), 'layouts/admin');
     }
 
     public function updateStatus(string $code): void {
         if (!Csrf::verify($this->request->post('_csrf'))) {
-            Session::flash('error', 'Invalid token.');
+            Session::flash('error', 'Invalid security token.');
             $this->redirect(base_url('admin/bookings/' . $code));
             return;
         }
@@ -54,6 +59,14 @@ class BookingAdminController extends Controller {
         if ($booking) {
             $status = $this->request->post('status');
             $notes = $this->request->post('internal_notes');
+
+            // Whitelist validation
+            if (!in_array($status, Booking::$allowedStatuses)) {
+                Session::flash('error', 'Invalid status selection.');
+                $this->redirect(base_url('admin/bookings/' . $code));
+                return;
+            }
+
             $bookingModel->updateStatus($booking['id'], $status, $notes);
             Session::flash('success', 'Booking status updated successfully.');
         }

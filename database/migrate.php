@@ -228,6 +228,30 @@ try {
           setting_key TEXT PRIMARY KEY,
           setting_value TEXT
         );
+
+        CREATE TABLE IF NOT EXISTS tour_reviews (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          tour_id INTEGER NOT NULL,
+          booking_id INTEGER,
+          client_name TEXT NOT NULL,
+          email TEXT NOT NULL,
+          rating INTEGER DEFAULT 5,
+          content TEXT NOT NULL,
+          status TEXT DEFAULT 'pending',
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS admin_notifications (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          type TEXT DEFAULT 'booking',
+          booking_id INTEGER,
+          title TEXT NOT NULL,
+          message TEXT NOT NULL,
+          link TEXT,
+          is_read INTEGER DEFAULT 0,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
         ";
         $db->exec($sqliteSchema);
         echo "SQLite Schema applied.\n";

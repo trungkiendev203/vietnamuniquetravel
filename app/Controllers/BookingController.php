@@ -7,8 +7,10 @@ use App\Core\Language;
 use App\Core\Csrf;
 use App\Core\Mailer;
 use App\Core\Session;
+use App\Core\RateLimiter;
 use App\Models\Booking;
 use App\Models\Tour;
+use App\Models\Notification;
 
 class BookingController extends Controller {
     public function form(): void {
@@ -24,12 +26,7 @@ class BookingController extends Controller {
         if ($selectedTourSlug) {
             $selectedTour = $tourModel->getBySlug($selectedTourSlug, $lang);
         } elseif ($selectedTourId) {
-            foreach ($tours as $t) {
-                if ((int)$t['id'] === (int)$selectedTourId) {
-                    $selectedTour = $t;
-                    break;
-                }
-            }
+            $selectedTour = $tourModel->getById((int)$selectedTourId, $lang);
         }
 
         $seo = [
@@ -43,6 +40,14 @@ class BookingController extends Controller {
 
     public function submit(): void {
         $lang = Language::current();
+
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        if (RateLimiter::tooManyAttempts("booking_submit_{$ip}", 10, 600)) {
+            Session::flash('error', 'Too many booking requests. Please wait a few minutes before trying again.');
+            $this->redirect(base_url(($lang === 'vi' ? 'vi/' : '') . 'booking'));
+            return;
+        }
+        RateLimiter::hit("booking_submit_{$ip}", 600);
 
         // Check Honeypot field (anti-spam)
         if (!empty($this->request->post('website_hp'))) {
@@ -62,11 +67,11 @@ class BookingController extends Controller {
         $email = trim($this->request->post('email', ''));
         $phone = trim($this->request->post('phone_whatsapp', ''));
         $travelDate = trim($this->request->post('travel_date', ''));
-        $adults = (int)$this->request->post('adults', 1);
-        $children = (int)$this->request->post('children', 0);
+        $adults = max(1, (int)$this->request->post('adults', 1));
+        $children = max(0, (int)$this->request->post('children', 0));
         $pickup = trim($this->request->post('pickup_location', ''));
-        $tourName = trim($this->request->post('tour_name', 'Custom Inquiry'));
         $tourId = $this->request->post('tour_id') ? (int)$this->request->post('tour_id') : null;
+        $clientTourName = trim($this->request->post('tour_name', 'Custom Inquiry'));
         $nationality = trim($this->request->post('nationality', ''));
         $dietary = trim($this->request->post('dietary_requirements', ''));
         $health = trim($this->request->post('health_notes', ''));
@@ -80,8 +85,19 @@ class BookingController extends Controller {
             return;
         }
 
+        // Server-side verification of tour details from DB
+        $tourName = $clientTourName;
+        if ($tourId) {
+            $tourModel = new Tour();
+            $tInfo = $tourModel->getById($tourId, $lang);
+            if ($tInfo && !empty($tInfo['title'])) {
+                $tourName = $tInfo['title'];
+            }
+        }
+
+        // 1. Create booking FIRST in database
         $bookingModel = new Booking();
-        $code = $bookingModel->createBooking([
+        $res = $bookingModel->createBooking([
             'tour_id' => $tourId,
             'tour_name' => $tourName,
             'travel_date' => $travelDate,
@@ -97,25 +113,46 @@ class BookingController extends Controller {
             'special_requests' => $special
         ]);
 
-        // Build Email HTML for Sales & Customer
-        $salesSubject = "New Booking Inquiry [{$code}] - " . $tourName;
-        $salesBody = $this->buildSalesEmailHtml($code, $tourName, $travelDate, $adults, $children, $fullname, $nationality, $email, $phone, $pickup, $dietary, $health, $special);
+        $bookingId = $res['id'];
+        $code = $res['code'];
 
-        $customerSubject = $lang === 'vi' 
-            ? "Xác nhận yêu cầu đặt tour [{$code}] – Vietnam Unique Travel"
-            : "Booking request confirmation [{$code}] – Vietnam Unique Travel";
-            
-        $customerBody = $this->buildCustomerEmailHtml($lang, $code, $tourName, $travelDate, $adults, $children, $fullname, $nationality, $email, $phone, $pickup, $dietary, $health, $special);
-
-        $sentAdmin = Mailer::send('sales.vietnamuniquetravel@gmail.com', $salesSubject, $salesBody);
-        $sentCustomer = Mailer::send($email, $customerSubject, $customerBody);
-
-        $errorLog = null;
-        if (!$sentAdmin || !$sentCustomer) {
-            $errorLog = "Admin email sent: " . ($sentAdmin ? 'YES' : 'NO') . " | Customer email sent: " . ($sentCustomer ? 'YES' : 'NO');
+        // 2. Create Admin Notification in DB (guaranteed notification)
+        try {
+            $notifModel = new Notification();
+            $notifModel->createNotification([
+                'type' => 'booking',
+                'booking_id' => $bookingId,
+                'title' => "Booking mới [{$code}]",
+                'message' => "Mã đặt tour: {$code}\nKhách hàng: {$fullname}\nTour: {$tourName}\nNgày đi: {$travelDate}\nThời gian: " . date('Y-m-d H:i:s'),
+                'link' => "admin/bookings/{$code}"
+            ]);
+        } catch (\Throwable $e) {
+            error_log("Failed to create admin notification: " . $e->getMessage());
         }
 
-        $bookingModel->updateEmailStatus($code, $sentAdmin, $sentCustomer, $errorLog);
+        // 3. Build & send Emails (Optional, non-blocking failure)
+        try {
+            $salesSubject = "New Booking Inquiry [{$code}] - " . $tourName;
+            $salesBody = $this->buildSalesEmailHtml($code, $tourName, $travelDate, $adults, $children, $fullname, $nationality, $email, $phone, $pickup, $dietary, $health, $special);
+
+            $customerSubject = $lang === 'vi' 
+                ? "Xác nhận yêu cầu đặt tour [{$code}] – Vietnam Unique Travel"
+                : "Booking request confirmation [{$code}] – Vietnam Unique Travel";
+                
+            $customerBody = $this->buildCustomerEmailHtml($lang, $code, $tourName, $travelDate, $adults, $children, $fullname, $nationality, $email, $phone, $pickup, $dietary, $health, $special);
+
+            $sentAdmin = Mailer::send('sales.vietnamuniquetravel@gmail.com', $salesSubject, $salesBody);
+            $sentCustomer = Mailer::send($email, $customerSubject, $customerBody);
+
+            $errorLog = null;
+            if (!$sentAdmin || !$sentCustomer) {
+                $errorLog = "Admin email sent: " . ($sentAdmin ? 'YES' : 'NO') . " | Customer email sent: " . ($sentCustomer ? 'YES' : 'NO');
+            }
+
+            $bookingModel->updateEmailStatus($code, $sentAdmin, $sentCustomer, $errorLog);
+        } catch (\Throwable $e) {
+            error_log("Email sending exception: " . $e->getMessage());
+        }
 
         // PRG Redirect to success page
         $this->redirect(base_url(($lang === 'vi' ? 'vi/' : '') . 'booking-success?code=' . urlencode($code)));
@@ -156,42 +193,10 @@ class BookingController extends Controller {
         if ($lang === 'vi') {
             return "<h3>Xin chào {$name},</h3>
                     <p>Cảm ơn Quý khách đã quan tâm đến các chương trình của <strong>Vietnam Unique Travel</strong>.</p>
-                    <p>Chúng tôi đã nhận được yêu cầu đặt tour (Mã: <strong>{$code}</strong>) của Quý khách và đội ngũ tư vấn sẽ kiểm tra tình trạng dịch vụ, sau đó liên hệ lại trong thời gian sớm nhất.</p>
-                    <h4>Thông tin Quý khách đã gửi:</h4>
-                    <ul>
-                        <li><strong>Tour quan tâm:</strong> {$tourName}</li>
-                        <li><strong>Ngày dự kiến:</strong> {$date}</li>
-                        <li><strong>Số lượng:</strong> {$adults} người lớn, {$children} trẻ em</li>
-                        <li><strong>Họ và tên:</strong> {$name}</li>
-                        <li><strong>Quốc tịch:</strong> {$nat}</li>
-                        <li><strong>Email:</strong> {$email}</li>
-                        <li><strong>Số điện thoại/WhatsApp:</strong> {$phone}</li>
-                        <li><strong>Địa điểm đón:</strong> {$pickup}</li>
-                        <li><strong>Yêu cầu ăn uống:</strong> {$diet}</li>
-                        <li><strong>Ghi chú sức khỏe:</strong> {$health}</li>
-                        <li><strong>Yêu cầu đặc biệt:</strong> {$spec}</li>
-                    </ul>
-                    <p>Hotline hỗ trợ: +84 362 191 568 | Email: sales.vietnamuniquetravel@gmail.com</p>
-                    <p>Trân trọng,<br>Vietnam Unique Travel</p>";
+                    <p>Chúng tôi đã nhận được yêu cầu đặt tour (Mã: <strong>{$code}</strong>) và đội ngũ tư vấn sẽ liên hệ lại trong thời gian sớm nhất.</p>";
         }
         return "<h3>Dear {$name},</h3>
-                <p>Thank you for your interest in the tours and experiences offered by <strong>Vietnam Unique Travel</strong>.</p>
-                <p>We have successfully received your tour inquiry (Booking Reference: <strong>{$code}</strong>). Our travel consultants will check availability and contact you as soon as possible to assist you with the next steps.</p>
-                <h4>Your Submitted Information:</h4>
-                <ul>
-                    <li><strong>Tour of Interest:</strong> {$tourName}</li>
-                    <li><strong>Preferred Travel Date:</strong> {$date}</li>
-                    <li><strong>Group Size:</strong> {$adults} Adults, {$children} Children</li>
-                    <li><strong>Full Name:</strong> {$name}</li>
-                    <li><strong>Nationality:</strong> {$nat}</li>
-                    <li><strong>Email Address:</strong> {$email}</li>
-                    <li><strong>Phone Number / WhatsApp:</strong> {$phone}</li>
-                    <li><strong>Hotel / Pickup Location:</strong> {$pickup}</li>
-                    <li><strong>Dietary Requirements:</strong> {$diet}</li>
-                    <li><strong>Health Information:</strong> {$health}</li>
-                    <li><strong>Special Requests:</strong> {$spec}</li>
-                </ul>
-                <p>Hotline: +84 362 191 568 | Email: sales.vietnamuniquetravel@gmail.com</p>
-                <p>Kind regards,<br>Vietnam Unique Travel</p>";
+                <p>Thank you for your interest in <strong>Vietnam Unique Travel</strong>.</p>
+                <p>We have received your tour inquiry (Reference: <strong>{$code}</strong>) and will contact you as soon as possible.</p>";
     }
 }

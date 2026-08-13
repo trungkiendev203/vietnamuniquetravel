@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
       drawer.classList.add('open');
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
     }
   }
 
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       drawer.classList.remove('open');
       overlay.classList.remove('active');
       document.body.style.overflow = '';
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
     }
   }
 
@@ -236,4 +238,42 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.appendChild(circle);
     setTimeout(() => circle.remove(), 600);
   });
+
+  // Sticky Header & Back To Top Floating Button Handler
+  const siteHeader = document.querySelector('.site-header');
+  const backToTopBtn = document.getElementById('backToTopBtn');
+
+  function handleScroll() {
+    const scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+
+    // Sticky Header: Keep header navigation visible when scrolling down
+    if (siteHeader) {
+      if (scrollPos > 60) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+    }
+
+    // Back to Top Button: Show when scrolled down past 280px
+    if (backToTopBtn) {
+      if (scrollPos > 280) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll(); // Initial check on load
+
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 });

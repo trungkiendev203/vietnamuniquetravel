@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Core\Controller;
 use App\Core\Session;
 use App\Core\Csrf;
+use App\Core\RateLimiter;
 use App\Models\Admin;
 
 class AuthController extends Controller {
@@ -19,6 +20,14 @@ class AuthController extends Controller {
     }
 
     public function loginSubmit(): void {
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        if (RateLimiter::tooManyAttempts("admin_login_{$ip}", 5, 900)) {
+            $waitMinutes = ceil(RateLimiter::availableIn("admin_login_{$ip}") / 60);
+            Session::flash('error', "Too many failed login attempts. Please wait {$waitMinutes} minutes.");
+            $this->redirect(base_url('admin/login'));
+            return;
+        }
+
         if (!Csrf::verify($this->request->post('_csrf'))) {
             Session::flash('error', 'Security token invalid.');
             $this->redirect(base_url('admin/login'));
@@ -32,6 +41,7 @@ class AuthController extends Controller {
         $user = $adminModel->verifyCredentials($username, $password);
 
         if ($user) {
+            RateLimiter::clear("admin_login_{$ip}");
             Session::set('admin_id', $user['id']);
             Session::set('admin_username', $user['username']);
             Session::set('admin_name', $user['name']);
@@ -41,6 +51,7 @@ class AuthController extends Controller {
             return;
         }
 
+        RateLimiter::hit("admin_login_{$ip}", 900);
         Session::flash('error', 'Invalid username or password.');
         $this->redirect(base_url('admin/login'));
     }

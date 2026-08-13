@@ -22,6 +22,7 @@ class Router {
     }
 
     public function dispatch(): void {
+        $startTime = microtime(true);
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
         $uri = $_SERVER['REQUEST_URI'] ?? '/';
         
@@ -31,12 +32,36 @@ class Router {
         }
         $uri = rtrim($uri, '/') ?: '/';
 
+        // Healthcheck & Observability endpoint
+        if ($uri === '/healthz' || $uri === '/api/health') {
+            header('Content-Type: application/json; charset=utf-8');
+            header('Cache-Control: no-cache, no-store, must-revalidate');
+            echo json_encode([
+                'status' => 'healthy',
+                'service' => 'vietnamuniquetravel',
+                'php_version' => PHP_VERSION,
+                'memory_usage_mb' => round(memory_get_usage(true) / 1024 / 1024, 2),
+                'peak_memory_mb' => round(memory_get_peak_usage(true) / 1024 / 1024, 2),
+                'timestamp' => time()
+            ]);
+            return;
+        }
+
+        // Global Security & Performance Headers
+        if (!headers_sent()) {
+            header('X-Content-Type-Options: nosniff');
+            header('X-Frame-Options: SAMEORIGIN');
+            header('Vary: Accept-Encoding, Accept-Language');
+        }
+
         // Extract language prefix if present (e.g., /en/..., /vi/...)
         $lang = 'en';
         if (preg_match('#^/(en|vi)(/.*)?$#i', $uri, $matches)) {
             $lang = strtolower($matches[1]);
             $uri = $matches[2] ?? '/';
             $uri = rtrim($uri, '/') ?: '/';
+        } elseif (preg_match('#^/(meo-du-lich|ve-chung-toi|lien-he)(/.*)?$#i', $uri)) {
+            $lang = 'vi';
         }
         Language::setLang($lang);
 
@@ -49,6 +74,11 @@ class Router {
             if (preg_match($pattern, $uri, $matches)) {
                 $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
                 
+                if (!headers_sent()) {
+                    $executionMs = round((microtime(true) - $startTime) * 1000, 2);
+                    header("Server-Timing: app;dur={$executionMs}");
+                }
+
                 if (is_array($route['callback'])) {
                     list($class, $methodName) = $route['callback'];
                     $controller = new $class();

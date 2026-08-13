@@ -7,11 +7,11 @@ use PDOException;
 
 class Database {
     private static ?PDO $instance = null;
+    private static bool $isSqliteReady = false;
 
     public static function getConnection(): PDO {
         if (self::$instance === null) {
             $connection = env('DB_CONNECTION', 'mysql');
-
             $isVercel = isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL']) || getenv('VERCEL');
 
             if ($connection === 'sqlite' || $isVercel) {
@@ -20,11 +20,24 @@ class Database {
                 if (!is_dir($dir)) {
                     @mkdir($dir, 0755, true);
                 }
+                
                 self::$instance = new PDO("sqlite:" . $dbFile, null, null, [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_TIMEOUT => 8,
                 ]);
-                self::ensureSqliteSeeded(self::$instance);
+
+                // High Performance SQLite PRAGMAs
+                self::$instance->exec("PRAGMA journal_mode = WAL;");
+                self::$instance->exec("PRAGMA synchronous = NORMAL;");
+                self::$instance->exec("PRAGMA busy_timeout = 8000;");
+                self::$instance->exec("PRAGMA temp_store = MEMORY;");
+                self::$instance->exec("PRAGMA cache_size = -64000;"); // 64MB Cache
+
+                if (!self::$isSqliteReady) {
+                    self::ensureSqliteSeeded(self::$instance);
+                    self::$isSqliteReady = true;
+                }
             } else {
                 $host = env('DB_HOST', '127.0.0.1');
                 $port = env('DB_PORT', '3306');
@@ -38,7 +51,7 @@ class Database {
                     self::$instance = new PDO($dsn, $username, $password, [
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                        PDO::ATTR_EMULATE_PREPARES => true,
+                        PDO::ATTR_EMULATE_PREPARES => false,
                         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
                     ]);
                 } catch (PDOException $e) {
@@ -50,8 +63,19 @@ class Database {
                     self::$instance = new PDO("sqlite:" . $dbFile, null, null, [
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                        PDO::ATTR_TIMEOUT => 8,
                     ]);
-                    self::ensureSqliteSeeded(self::$instance);
+
+                    self::$instance->exec("PRAGMA journal_mode = WAL;");
+                    self::$instance->exec("PRAGMA synchronous = NORMAL;");
+                    self::$instance->exec("PRAGMA busy_timeout = 8000;");
+                    self::$instance->exec("PRAGMA temp_store = MEMORY;");
+                    self::$instance->exec("PRAGMA cache_size = -64000;");
+
+                    if (!self::$isSqliteReady) {
+                        self::ensureSqliteSeeded(self::$instance);
+                        self::$isSqliteReady = true;
+                    }
                 }
             }
         }
@@ -63,7 +87,8 @@ class Database {
             $check = $pdo->query("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='tour_translations'")->fetchColumn();
             if ($check > 0) {
                 $count = $pdo->query("SELECT count(*) FROM tour_translations")->fetchColumn();
-                if ($count >= 14) {
+                if ($count >= 24) {
+                    self::ensureIndexes($pdo);
                     return;
                 }
             }
@@ -88,8 +113,11 @@ class Database {
         CREATE TABLE IF NOT EXISTS testimonials (id INTEGER PRIMARY KEY AUTOINCREMENT, client_name TEXT, client_country TEXT, client_avatar TEXT, rating INTEGER DEFAULT 5, content_en TEXT, content_vi TEXT, tour_name TEXT, is_featured INTEGER DEFAULT 1, sort_order INTEGER DEFAULT 0, created_at DATETIME DEFAULT CURRENT_TIMESTAMP);
         CREATE TABLE IF NOT EXISTS faqs (id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT DEFAULT 'general', question_en TEXT, answer_en TEXT, question_vi TEXT, answer_vi TEXT, sort_order INTEGER DEFAULT 0, status INTEGER DEFAULT 1, created_at DATETIME DEFAULT CURRENT_TIMESTAMP);
         CREATE TABLE IF NOT EXISTS settings (setting_key TEXT PRIMARY KEY, setting_value TEXT);
+        CREATE TABLE IF NOT EXISTS tour_reviews (id INTEGER PRIMARY KEY AUTOINCREMENT, tour_id INTEGER NOT NULL, booking_id INTEGER, client_name TEXT NOT NULL, email TEXT NOT NULL, rating INTEGER DEFAULT 5, content TEXT NOT NULL, status TEXT DEFAULT 'pending', created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP);
+        CREATE TABLE IF NOT EXISTS admin_notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT DEFAULT 'booking', booking_id INTEGER, title TEXT NOT NULL, message TEXT NOT NULL, link TEXT, is_read INTEGER DEFAULT 0, created_at DATETIME DEFAULT CURRENT_TIMESTAMP);
         ";
         $pdo->exec($sqliteSchema);
+        self::ensureIndexes($pdo);
 
         $seedFile = __DIR__ . '/../../database/seed.sql';
         if (file_exists($seedFile)) {
@@ -109,6 +137,27 @@ class Database {
                     }
                 }
             }
+        }
+    }
+
+    private static function ensureIndexes(PDO $pdo): void {
+        $indexes = [
+            "CREATE INDEX IF NOT EXISTS idx_tours_status_slug ON tours(status, slug);",
+            "CREATE INDEX IF NOT EXISTS idx_tours_featured ON tours(status, is_featured, is_signature);",
+            "CREATE INDEX IF NOT EXISTS idx_tours_destination ON tours(destination_id, status);",
+            "CREATE INDEX IF NOT EXISTS idx_tour_trans_lookup ON tour_translations(tour_id, lang);",
+            "CREATE INDEX IF NOT EXISTS idx_dest_slug ON destinations(slug, status);",
+            "CREATE INDEX IF NOT EXISTS idx_dest_trans_lookup ON destination_translations(destination_id, lang);",
+            "CREATE INDEX IF NOT EXISTS idx_categories_slug ON categories(slug, status);",
+            "CREATE INDEX IF NOT EXISTS idx_cat_trans_lookup ON category_translations(category_id, lang);",
+            "CREATE INDEX IF NOT EXISTS idx_tour_cats ON tour_categories(tour_id, category_id);",
+            "CREATE INDEX IF NOT EXISTS idx_posts_status ON posts(status, is_featured);",
+            "CREATE INDEX IF NOT EXISTS idx_post_trans_lookup ON post_translations(post_id, lang);",
+            "CREATE INDEX IF NOT EXISTS idx_testimonials_featured ON testimonials(is_featured, sort_order);",
+            "CREATE INDEX IF NOT EXISTS idx_faqs_status ON faqs(status, sort_order);"
+        ];
+        foreach ($indexes as $sql) {
+            try { $pdo->exec($sql); } catch (\Throwable $e) {}
         }
     }
 }

@@ -129,7 +129,7 @@ $prefix = $isVi ? 'vi/' : '';
           <div>
             <div class="vm-card-badge">
               <span class="vm-card-num">01</span>
-              <span class="vm-card-label"><?= $isVi ? 'OUR VISION — TẦM NHÌN' : '01 — OUR VISION' ?></span>
+              <span class="vm-card-label"><?= $isVi ? 'TẦM NHÌN' : 'OUR VISION' ?></span>
             </div>
             <h3 class="vm-card-h3"><?= $isVi ? 'Thương hiệu lữ hành uy tín' : 'Trusted Authentic Journeys' ?></h3>
             <p class="vm-card-quote">
@@ -148,7 +148,7 @@ $prefix = $isVi ? 'vi/' : '';
           <div>
             <div class="vm-card-badge">
               <span class="vm-card-num">02</span>
-              <span class="vm-card-label"><?= $isVi ? 'OUR MISSION — SỨ MỆNH' : '02 — OUR MISSION' ?></span>
+              <span class="vm-card-label"><?= $isVi ? 'SỨ MỆNH' : 'OUR MISSION' ?></span>
             </div>
             <h3 class="vm-card-h3"><?= $isVi ? 'Kết nối & Bảo tồn văn hóa' : 'Connecting & Preserving' ?></h3>
             <p class="vm-card-quote">
@@ -257,7 +257,7 @@ $prefix = $isVi ? 'vi/' : '';
     <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2, 47, 19, 0.75) 0%, rgba(0, 0, 0, 0.82) 100%);"></div>
     <div class="about-container" style="position: relative; z-index: 2;">
       <h2 class="artistic-cta-title">
-        <?= $isVi ? 'Hãy để Việt Nam trở thành một phần<br>trong câu chuyện của bạn.' : 'Let Vietnam become part<br>of your story.' ?>
+        <?= $isVi ? 'Hãy để Việt Nam trở thành một phần<br>trong câu chuyện của bạn.' : 'Let Vietnam become a part<br>of your story.' ?>
       </h2>
       <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
         <a href="<?= base_url($prefix . 'tours') ?>" class="btn btn-gold"><?= __('btn_explore_tours') ?></a>

@@ -23,7 +23,13 @@ if ($currentPathWithoutLang === 'contact') $viSwitchPath = 'lien-he';
 
 $isTourDetailPage = (bool)preg_match('#^tours/[^/]+#i', $currentPathWithoutLang);
 $isTourListPage = (bool)preg_match('#^tours/?$#i', $currentPathWithoutLang);
-$isLightHeaderPage = $isAboutPage || $isContactPage || $isTourDetailPage || $isTourListPage;
+$isTravelTipsPage = (bool)preg_match('#^(travel-tips|meo-du-lich|blog)#i', $currentPathWithoutLang);
+$travelTipsUrl = base_url($currentLang === 'vi' ? 'vi/meo-du-lich' : 'travel-tips');
+
+if ($currentPathWithoutLang === 'meo-du-lich') $enSwitchPath = 'travel-tips';
+if ($currentPathWithoutLang === 'travel-tips') $viSwitchPath = 'meo-du-lich';
+
+$isLightHeaderPage = $isAboutPage || $isContactPage || $isTourDetailPage || $isTourListPage || $isTravelTipsPage;
 
 $enSwitchUrl = base_url($enSwitchPath);
 $viSwitchUrl = base_url('vi/' . $viSwitchPath);
@@ -37,15 +43,16 @@ $viSwitchUrl = base_url('vi/' . $viSwitchPath);
     </a>
 
   <div class="container nav-wrapper">
-    <!-- Header Menu Links (Home, Tours, About us, Contact us) -->
+    <!-- Header Menu Links (Home, Tours, Travel Tips, About us, Contact us) -->
     <ul class="nav-menu">
       <li><a href="<?= base_url($prefix) ?>" class="nav-link <?= $isHomePage ? 'active' : '' ?>"><?= __('nav_home') ?></a></li>
       <li><a href="<?= base_url($prefix . 'tours') ?>" class="nav-link <?= $isToursPage ? 'active' : '' ?>"><?= __('nav_tours') ?></a></li>
+      <li><a href="<?= $travelTipsUrl ?>" class="nav-link <?= $isTravelTipsPage ? 'active' : '' ?>"><?= $currentLang === 'vi' ? 'Mẹo Du Lịch' : 'Travel Tips' ?></a></li>
       <li><a href="<?= $aboutUrl ?>" class="nav-link <?= $isAboutPage ? 'active' : '' ?>"><?= __('nav_about') ?></a></li>
       <li><a href="<?= $contactUrl ?>" class="nav-link <?= $isContactPage ? 'active' : '' ?>"><?= __('nav_contact') ?></a></li>
     </ul>
 
-    <div style="display: flex; align-items: center; gap: 14px; flex-shrink: 0;">
+    <div class="header-actions-group">
       <!-- Language Dropdown Selector (Flags + Google Translate) -->
       <div class="lang-dropdown-wrapper">
         <button class="lang-dropdown-btn" type="button" aria-expanded="false" aria-label="Select Language">
@@ -100,9 +107,9 @@ $viSwitchUrl = base_url('vi/' . $viSwitchPath);
         </div>
       </div>
 
-      <a href="<?= base_url($prefix . 'booking') ?>" class="btn btn-gold" style="padding: 9px 18px; font-size: 0.85rem;"><?= __('btn_book_tour') ?></a>
+      <a href="<?= base_url($prefix . 'booking') ?>" class="btn btn-gold header-book-btn"><?= __('btn_book_tour') ?></a>
 
-      <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
         &#9776;
       </button>
     </div>
@@ -111,22 +118,22 @@ $viSwitchUrl = base_url('vi/' . $viSwitchPath);
 
 <!-- Mobile Navigation Drawer -->
 <div class="drawer-overlay"></div>
-<div class="mobile-drawer" role="dialog" aria-modal="true">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-    <img src="<?= asset('assets/images/vnu-logo-white.png') ?>" alt="Vietnam Unique Travel" style="height: 55px; width: auto;">
-    <button class="drawer-close" style="background: none; border: none; color: #FFF; font-size: 2rem; cursor: pointer;">&times;</button>
+<div class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+  <div class="drawer-header">
+    <img src="<?= asset('assets/images/vnu-logo-white.png') ?>" alt="Vietnam Unique Travel" class="drawer-logo">
+    <button class="drawer-close" aria-label="Close navigation menu">&times;</button>
   </div>
-  <ul style="list-style: none; display: flex; flex-direction: column; gap: 20px;">
-    <li><a href="<?= base_url($prefix) ?>" class="nav-link"><?= __('nav_home') ?></a></li>
-    <li><a href="<?= base_url($prefix . 'tours') ?>" class="nav-link"><?= __('nav_tours') ?></a></li>
-    <li><a href="<?= base_url($prefix . 'destinations') ?>" class="nav-link"><?= __('nav_destinations') ?></a></li>
-    <li><a href="<?= base_url($prefix . 'experiences') ?>" class="nav-link"><?= __('nav_experiences') ?></a></li>
-    <li><a href="<?= $aboutUrl ?>" class="nav-link <?= $isAboutPage ? 'active' : '' ?>"><?= __('nav_about') ?></a></li>
-    <li><a href="<?= base_url($prefix . 'responsible-tourism') ?>" class="nav-link"><?= __('nav_responsible') ?></a></li>
-    <li><a href="<?= base_url($prefix . 'blog') ?>" class="nav-link"><?= __('nav_blog') ?></a></li>
-    <li><a href="<?= $contactUrl ?>" class="nav-link <?= $isContactPage ? 'active' : '' ?>"><?= __('nav_contact') ?></a></li>
+  <ul class="drawer-nav-list">
+    <li><a href="<?= base_url($prefix) ?>" class="drawer-nav-link <?= $isHomePage ? 'active' : '' ?>"><?= __('nav_home') ?></a></li>
+    <li><a href="<?= base_url($prefix . 'tours') ?>" class="drawer-nav-link <?= $isToursPage ? 'active' : '' ?>"><?= __('nav_tours') ?></a></li>
+    <li><a href="<?= $travelTipsUrl ?>" class="drawer-nav-link <?= $isTravelTipsPage ? 'active' : '' ?>">💡 <?= $currentLang === 'vi' ? 'Mẹo Du Lịch' : 'Travel Tips' ?></a></li>
+    <li><a href="<?= base_url($prefix . 'destinations') ?>" class="drawer-nav-link"><?= __('nav_destinations') ?></a></li>
+    <li><a href="<?= base_url($prefix . 'experiences') ?>" class="drawer-nav-link"><?= __('nav_experiences') ?></a></li>
+    <li><a href="<?= $aboutUrl ?>" class="drawer-nav-link <?= $isAboutPage ? 'active' : '' ?>"><?= __('nav_about') ?></a></li>
+    <li><a href="<?= base_url($prefix . 'responsible-tourism') ?>" class="drawer-nav-link"><?= __('nav_responsible') ?></a></li>
+    <li><a href="<?= $contactUrl ?>" class="drawer-nav-link <?= $isContactPage ? 'active' : '' ?>"><?= __('nav_contact') ?></a></li>
   </ul>
-  <div style="margin-top: auto;">
-    <a href="<?= base_url($prefix . 'booking') ?>" class="btn btn-gold" style="width: 100%;"><?= __('btn_book_tour') ?></a>
+  <div class="drawer-footer-cta">
+    <a href="<?= base_url($prefix . 'booking') ?>" class="btn btn-gold drawer-cta-btn"><?= __('btn_book_tour') ?></a>
   </div>
 </div>

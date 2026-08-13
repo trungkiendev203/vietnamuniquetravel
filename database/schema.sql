@@ -275,4 +275,36 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `setting_value` LONGTEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 20. Tour Reviews Table
+CREATE TABLE IF NOT EXISTS `tour_reviews` (
+  `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `tour_id` INT UNSIGNED NOT NULL,
+  `booking_id` INT UNSIGNED NULL,
+  `client_name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `rating` TINYINT UNSIGNED NOT NULL DEFAULT 5,
+  `content` TEXT NOT NULL,
+  `status` ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX `idx_reviews_tour_status` (`tour_id`, `status`),
+  INDEX `idx_reviews_booking` (`booking_id`),
+  FOREIGN KEY (`tour_id`) REFERENCES `tours`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 21. Admin Notifications Table
+CREATE TABLE IF NOT EXISTS `admin_notifications` (
+  `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `type` VARCHAR(50) DEFAULT 'booking',
+  `booking_id` INT UNSIGNED NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `message` TEXT NOT NULL,
+  `link` VARCHAR(255) NULL,
+  `is_read` TINYINT(1) DEFAULT 0,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_notif_read` (`is_read`),
+  INDEX `idx_notif_booking` (`booking_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;
+

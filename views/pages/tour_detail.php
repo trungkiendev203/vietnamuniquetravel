@@ -335,6 +335,9 @@ $totalPhotos = count($gallery);
 
     </div>
 
+    <!-- Reviews Section -->
+    <?php include __DIR__ . '/partials/tour_reviews.php'; ?>
+
     <!-- 4. Related Tours Section -->
     <?php if (!empty($relatedTours)): ?>
       <div style="margin-top: 80px; padding-top: 60px; border-top: 1px solid rgba(0,0,0,0.08);">
@@ -342,7 +345,7 @@ $totalPhotos = count($gallery);
           <?= $isVi ? 'Những hành trình gợi ý khác' : 'Similar Journeys You Might Enjoy' ?>
         </h2>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px;">
           <?php foreach ($relatedTours as $rel): ?>
             <?php if ($rel['id'] === $tour['id']) continue; ?>
             <div style="background: #FFFFFF; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06); display: flex; flex-direction: column;">

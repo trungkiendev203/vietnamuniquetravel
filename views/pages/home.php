@@ -19,7 +19,7 @@ $prefix = $isVi ? 'vi/' : '';
 
     <!-- Tagline Subtitle -->
     <p class="hero-sovaba-tagline">
-      <?= $lang === 'vi' ? 'Hành trình độc đáo, trải nghiệm chân thực' : 'New step, new life' ?>
+      <?= $lang === 'vi' ? 'Khám phá - Kết nối - Du lịch có trách nhiệm' : 'Discover - Connect - Travel Responsibly' ?>
     </p>
 
     <!-- Sovaba Style Pill Search Bar -->
@@ -191,14 +191,14 @@ $prefix = $isVi ? 'vi/' : '';
 <?php endif; ?>
 
 <!-- FEATURED EXPERIENCES SECTION -->
-<section style="padding: 100px 0; background: #FFFFFF;">
+<section class="experiences-section">
   <div class="container">
     <div class="section-header-center">
       <span class="section-sub-gold" style="color: var(--color-brand-green);"><?= __('experiences_title') ?></span>
-      <h2 style="font-size: 2.5rem; color: var(--color-text-dark);"><?= __('experiences_subtitle') ?></h2>
+      <h2 class="section-title-dark"><?= __('experiences_subtitle') ?></h2>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+    <div class="experiences-grid">
       <?php foreach ($categories as $cat): ?>
         <div class="exp-card">
           <div style="position: relative; overflow: hidden;">
@@ -355,77 +355,87 @@ renderGlassCarousel();
 startWhyGlassTimer();
 </script>
 
-<!-- TESTIMONIALS SECTION -->
-<section style="padding: 90px 0; background: var(--color-forest-dark); color: #FFF;">
+<!-- TESTIMONIALS SECTION (INFINITE SMOOTH FLOWING MARQUEE) -->
+<section class="testimonials-flowing-sec" style="padding: 100px 0; background: var(--color-forest-dark); color: #FFF; overflow: hidden; position: relative;">
   <div class="container">
-    <div class="section-header-center">
-      <span class="section-sub-gold">Guest Reviews</span>
-      <h2 class="section-title-white">Stories From Our Travelers</h2>
+    <div class="section-header-center" style="margin-bottom: 45px;">
+      <span class="section-sub-gold"><?= $isVi ? 'Đánh Giá Của Khách Hàng' : 'Guest Reviews' ?></span>
+      <h2 class="section-title-white"><?= $isVi ? 'Câu Chuyện Từ Những Chuyến Đi' : 'Stories From Our Travelers' ?></h2>
+      <p style="color: rgba(255, 255, 255, 0.7); max-width: 620px; margin: 12px auto 0; font-size: 0.95rem; line-height: 1.6;">
+        <?= $isVi 
+          ? 'Những chia sẻ chân thực từ du khách quốc tế sau các hành trình khám phá thiên nhiên và văn hóa Việt Nam cùng chúng tôi.' 
+          : 'Authentic reflections from worldwide travelers who explored the nature, heritage, and soul of Vietnam with us.' ?>
+      </p>
     </div>
+  </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-      <?php foreach ($testimonials as $item): ?>
-        <div style="background: rgba(255,255,255,0.06); padding: 32px; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1);">
-          <div style="color: var(--color-gold); margin-bottom: 12px; font-size: 1.2rem;">
-            <?= str_repeat('★', $item['rating']) ?>
+  <!-- Marquee Carousel Wrapper with Subtle Edge Fades -->
+  <div class="testimonials-marquee-wrapper">
+    <div class="testimonials-marquee-track">
+      
+      <!-- Track 1: First set of 8 reviews -->
+      <div class="testimonials-marquee-group">
+        <?php foreach ($testimonials as $item): 
+          $cleanTourName = preg_replace('/^[A-Z0-9\s–\-]+:\s*/iu', '', $item['tour_name']);
+        ?>
+          <div class="flowing-testimonial-card">
+            <div>
+              <div class="flowing-test-stars">
+                <?= str_repeat('★', (int)($item['rating'] ?: 5)) ?>
+              </div>
+              <p class="flowing-test-quote">
+                “<?= e($item['content']) ?>”
+              </p>
+            </div>
+            <div class="flowing-test-author">
+              <div class="flowing-test-name">
+                <?= e($item['client_name']) ?>
+                <span class="flowing-test-country">(<?= e($item['client_country']) ?>)</span>
+              </div>
+              <div class="flowing-test-tour">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 5px; color: var(--color-gold);">
+                  <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <?= e($cleanTourName) ?>
+              </div>
+            </div>
           </div>
-          <p style="font-style: italic; color: rgba(255,255,255,0.9); margin-bottom: 20px; font-size: 0.98rem; line-height: 1.6;">
-            "<?= e($item['content']) ?>"
-          </p>
-          <div style="font-weight: 700; color: #FFF;"><?= e($item['client_name']) ?> <span style="color: var(--color-gold); font-size: 0.85rem;">(<?= e($item['client_country']) ?>)</span></div>
-          <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;"><?= e($item['tour_name']) ?></div>
-        </div>
-      <?php endforeach; ?>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- Track 2: Exact Duplicate for Seamless Infinite 360° Loop -->
+      <div class="testimonials-marquee-group" aria-hidden="true">
+        <?php foreach ($testimonials as $item): 
+          $cleanTourName = preg_replace('/^[A-Z0-9\s–\-]+:\s*/iu', '', $item['tour_name']);
+        ?>
+          <div class="flowing-testimonial-card">
+            <div>
+              <div class="flowing-test-stars">
+                <?= str_repeat('★', (int)($item['rating'] ?: 5)) ?>
+              </div>
+              <p class="flowing-test-quote">
+                “<?= e($item['content']) ?>”
+              </p>
+            </div>
+            <div class="flowing-test-author">
+              <div class="flowing-test-name">
+                <?= e($item['client_name']) ?>
+                <span class="flowing-test-country">(<?= e($item['client_country']) ?>)</span>
+              </div>
+              <div class="flowing-test-tour">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 5px; color: var(--color-gold);">
+                  <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <?= e($cleanTourName) ?>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- OUR SERVICES BENTO GRID SECTION -->
-<section class="our-services-sec">
-  <div class="container">
-    <h2 class="our-services-title"><?= $isVi ? 'Dịch vụ của chúng tôi' : 'Our Services' ?></h2>
-
-    <div class="services-bento-grid">
-      <!-- Card 1 (Large - Hotel Rooms) -->
-      <a href="<?= base_url($prefix . 'booking') ?>" class="service-card service-card-large">
-        <img src="<?= asset('assets/images/hotel-room.png') ?>" alt="<?= $isVi ? 'Phòng khách sạn' : 'Hotel Accommodation' ?>" loading="lazy">
-        <div class="service-card-overlay">
-          <h3 class="service-card-title"><?= $isVi ? 'Phòng khách sạn' : 'Hotel Accommodation' ?></h3>
-        </div>
-      </a>
-
-      <!-- Card 2 (Top Middle - Flight Tickets) -->
-      <a href="<?= base_url($prefix . 'booking') ?>" class="service-card">
-        <img src="<?= asset('assets/images/flight-tickets.png') ?>" alt="<?= $isVi ? 'Vé máy bay' : 'Flight Tickets' ?>" loading="lazy">
-        <div class="service-card-overlay" style="justify-content: center;">
-          <h3 class="service-card-title"><?= $isVi ? 'Vé máy bay' : 'Flight Tickets' ?></h3>
-        </div>
-      </a>
-
-      <!-- Card 3 (Top Right - Passport Services) -->
-      <a href="<?= base_url($prefix . 'booking') ?>" class="service-card">
-        <img src="<?= asset('assets/images/passport-service.png') ?>" alt="<?= $isVi ? 'Dịch vụ hộ chiếu' : 'Passport & Visa Services' ?>" loading="lazy">
-        <div class="service-card-overlay" style="justify-content: center;">
-          <h3 class="service-card-title"><?= $isVi ? 'Dịch vụ hộ chiếu' : 'Passport & Visa Services' ?></h3>
-        </div>
-      </a>
-
-      <!-- Card 4 (Bottom Middle - Team Building) -->
-      <a href="<?= base_url($prefix . 'booking') ?>" class="service-card">
-        <img src="<?= asset('assets/images/team-building.png') ?>" alt="<?= $isVi ? 'Team building' : 'Team Building' ?>" loading="lazy">
-        <div class="service-card-overlay" style="justify-content: center;">
-          <h3 class="service-card-title"><?= $isVi ? 'Team building' : 'Team Building' ?></h3>
-        </div>
-      </a>
-
-      <!-- Card 5 (Bottom Right - Event Organization) -->
-      <a href="<?= base_url($prefix . 'booking') ?>" class="service-card">
-        <img src="<?= asset('assets/images/event-organization.png') ?>" alt="<?= $isVi ? 'Tổ chức sự kiện' : 'Event Organization' ?>" loading="lazy">
-        <div class="service-card-overlay" style="justify-content: center;">
-          <h3 class="service-card-title"><?= $isVi ? 'Tổ chức sự kiện' : 'Event Organization' ?></h3>
-        </div>
-      </a>
-    </div>
-
-  </div>
-</section>

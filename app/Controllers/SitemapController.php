@@ -17,7 +17,7 @@ class SitemapController extends Controller {
 
         $tours = $tourModel->getAll('en');
         $destinations = $destModel->getAll('en');
-        $posts = $postModel->getAll('en', 50);
+        $posts = $postModel->getAll('en', [], 50);
 
         echo '<?xml version="1.0" encoding="UTF-8"?>';
         echo '<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
@@ -68,9 +68,12 @@ class SitemapController extends Controller {
 
     public function robots(): void {
         header("Content-Type: text/plain; charset=utf-8");
-        echo "User-agent: *\n";
-        echo "Disallow: /admin\n";
-        echo "Disallow: /storage\n";
+        echo "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /storage/\n\n";
+        echo "User-agent: facebookexternalhit\nAllow: /\n\n";
+        echo "User-agent: Facebot\nAllow: /\n\n";
+        echo "User-agent: Twitterbot\nAllow: /\n\n";
+        echo "User-agent: WhatsApp\nAllow: /\n\n";
+        echo "User-agent: TelegramBot\nAllow: /\n\n";
         echo "Sitemap: " . base_url('sitemap.xml') . "\n";
         exit;
     }

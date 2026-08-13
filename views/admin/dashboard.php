@@ -20,6 +20,22 @@
     <div style="font-size: 0.85rem; color: #666; font-weight: 700; text-transform: uppercase;">Active Tours</div>
     <div style="font-size: 2.2rem; font-weight: 800; color: #2563EB; margin-top: 8px;"><?= $stats['total_tours'] ?></div>
   </div>
+
+  <div class="admin-card" style="border-left: 4px solid #F59E0B;">
+    <div style="font-size: 0.85rem; color: #666; font-weight: 700; text-transform: uppercase;">Pending Reviews</div>
+    <div style="font-size: 2.2rem; font-weight: 800; color: #D97706; margin-top: 8px; display: flex; justify-content: space-between; align-items: baseline;">
+      <span><?= $stats['pending_reviews'] ?></span>
+      <a href="<?= base_url('admin/reviews?status=pending') ?>" style="font-size: 0.85rem; color: #2563EB; font-weight: 700; text-decoration: none;">View &rarr;</a>
+    </div>
+  </div>
+
+  <div class="admin-card" style="border-left: 4px solid #EF4444;">
+    <div style="font-size: 0.85rem; color: #666; font-weight: 700; text-transform: uppercase;">Unread Notifications</div>
+    <div style="font-size: 2.2rem; font-weight: 800; color: #DC2626; margin-top: 8px; display: flex; justify-content: space-between; align-items: baseline;">
+      <span><?= $stats['unread_notifications'] ?></span>
+      <a href="<?= base_url('admin/notifications') ?>" style="font-size: 0.85rem; color: #2563EB; font-weight: 700; text-decoration: none;">View &rarr;</a>
+    </div>
+  </div>
 </div>
 
 <div class="admin-card">

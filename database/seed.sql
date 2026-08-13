@@ -1,295 +1,363 @@
 -- Seed Data for Vietnam Unique Travel
--- Compatible with MySQL 5.7+ / 8.0+
+-- Compatible with MySQL 5.7+ / 8.0+ / SQLite
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
--- 1. Insert Default Admin Account
-INSERT INTO `admins` (`id`, `username`, `email`, `password`, `name`, `role`, `status`) VALUES
-(1, 'admin', 'sales.vietnamuniquetravel@gmail.com', '$2b$12$QAsVgXMNTdUkhHbhHbv.gucg9tlvw.59kS.JmWfFUZ2kTuTMcVgYO', 'Vietnam Unique Travel Admin', 'admin', 1)
-ON DUPLICATE KEY UPDATE `password` = VALUES(`password`), `name` = VALUES(`name`);
+-- Insert into admins
+INSERT IGNORE INTO `admins` (`id`, `username`, `email`, `password`, `name`, `role`, `status`, `created_at`, `updated_at`) VALUES ('1', 'admin', 'sales.vietnamuniquetravel@gmail.com', '$2b$12$QAsVgXMNTdUkhHbhHbv.gucg9tlvw.59kS.JmWfFUZ2kTuTMcVgYO', 'Vietnam Unique Travel Admin', 'admin', '1', '2026-08-09 00:20:19', '2026-08-09 00:20:19');
 
--- 2. Insert Destinations
-INSERT IGNORE INTO `destinations` (`id`, `slug`, `image`, `is_featured`, `sort_order`, `status`) VALUES
-(1, 'pu-luong-nature-reserve', '/assets/images/hero.webp', 1, 1, 1),
-(2, 'mai-chau-valley', '/assets/images/water-wheels.webp', 1, 2, 1),
-(3, 'ninh-binh', '/assets/images/bamboo-rafting.webp', 1, 3, 1),
-(4, 'ha-giang-loop', '/assets/images/hieu-waterfall.webp', 1, 4, 1);
+-- Insert into destinations
+INSERT IGNORE INTO `destinations` (`id`, `slug`, `image`, `is_featured`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('1', 'pu-luong-nature-reserve', '/assets/images/hero.webp', '1', '1', '1', '2026-08-09 00:20:19', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `destinations` (`id`, `slug`, `image`, `is_featured`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('2', 'mai-chau-valley', '/assets/images/water-wheels.webp', '1', '2', '1', '2026-08-09 00:20:19', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `destinations` (`id`, `slug`, `image`, `is_featured`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('3', 'ninh-binh', '/assets/images/bamboo-rafting.webp', '1', '3', '1', '2026-08-09 00:20:19', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `destinations` (`id`, `slug`, `image`, `is_featured`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES ('4', 'ha-giang-loop', '/assets/images/hieu-waterfall.webp', '1', '4', '1', '2026-08-09 00:20:19', '2026-08-09 00:20:19');
 
-INSERT IGNORE INTO `destination_translations` (`destination_id`, `lang`, `name`, `short_description`, `description`, `seo_title`, `seo_description`) VALUES
-(1, 'en', 'Pu Luong Nature Reserve', 'Pristine limestone karsts, lush terraced rice fields, vibrant Thai ethnic villages and roaring waterfalls.', 'Pu Luong Nature Reserve is a haven of serene mountain landscapes, endless rice terraces, and authentic ethnic minority culture located in Thanh Hoa province.', 'Pu Luong Nature Reserve Tours | Vietnam Unique Travel', 'Discover authentic Pu Luong tours with trekking, bamboo rafting, waterfalls, and ethnic stilt houses.'),
-(1, 'vi', 'Khu Bảo Tồn Thiên Nhiên Pù Luông', 'Vùng đất hoang sơ với ruộng bậc thang hùng vĩ, bản làng người Thái và những dòng thác kỳ vĩ.', 'Khu bảo tồn thiên nhiên Pù Luông thuộc tỉnh Thanh Hóa, nơi sở hữu những thửa ruộng bậc thang ngút ngàn, dãy núi đá vôi hùng vĩ và các bản làng người Thái yên bình.', 'Tour Pù Luông Trải Nghiệm Độc Đáo | Vietnam Unique Travel', 'Khám phá các chương trình tour Pù Luông trekking, đi bè tre, ngắm thác Hiêu và trải nghiệm văn hóa bản địa.'),
-(2, 'en', 'Mai Chau Valley', 'Idyllic valley surrounded by emerald mountains and traditional White Thai ethnic villages.', 'Mai Chau is famous for its peaceful rural scenery, wooden stilt houses, warm hospitality, and traditional brocade weaving.', 'Mai Chau Valley Tours | Vietnam Unique Travel', 'Explore Mai Chau valley with cycling, homestay experience, and local culture.'),
-(2, 'vi', 'Thung Lũng Mai Châu', 'Thung lũng yên bình với núi rừng xanh mướt và những bản làng người Thái Trắng.', 'Mai Châu nổi tiếng với khung cảnh nông thôn yên bình, những nếp nhà sàn bằng gỗ và văn hóa dệt thổ cẩm lâu đời.', 'Tour Mai Châu Trải Nghiệm | Vietnam Unique Travel', 'Khám phá thung lũng Mai Châu với các hoạt động đạp xe, lưu trú nhà sàn và tìm hiểu văn hóa.'),
-(3, 'en', 'Ninh Binh', 'Ha Long Bay on land featuring towering limestone karst towers and ancient riverways.', 'Ninh Binh offers dramatic karst landscapes, river boat trips through sacred caves, and ancient temples.', 'Ninh Binh Eco Tours | Vietnam Unique Travel', 'Authentic eco tours to Ninh Binh, Trang An, Tam Coc, and Cuc Phuong National Park.'),
-(3, 'vi', 'Ninh Bình', 'Vịnh Hạ Long trên cạn với những dãy núi đá vôi kỳ vĩ và dòng sông uốn lượn.', 'Ninh Bình sở hữu cảnh quan karst kỳ vĩ, những dòng sông thơ mộng xuyên qua hang động và di tích lịch sử cổ kính.', 'Tour Du Lịch Ninh Bình | Vietnam Unique Travel', 'Hành trình khám phá Ninh Bình, Tràng An, Tam Cốc và Vườn Quốc Gia Cúc Phương.'),
-(4, 'en', 'Ha Giang Loop', 'Spectacular northern mountain frontier with dramatic passes, deep canyons and vibrant hill tribes.', 'Ha Giang is Vietnam ultimate mountain frontier, boasting the famous Ma Pi Leng pass and unique ethnic diversity.', 'Ha Giang Mountain Tours | Vietnam Unique Travel', 'Explore Ha Giang loop with responsible trekking and motorbike tours.'),
-(4, 'vi', 'Hà Giang', 'Vùng núi phía Bắc hùng vĩ với những con đèo hiểm trở, hẻm vực sâu và bản làng cao nguyên đá.', 'Hà Giang là mảnh đất địa đầu Tổ quốc với đèo Mã Pí Lèng kỳ vĩ và những nét văn hóa đa dạng của đồng bào tộc người.', 'Tour Hà Giang Hùng Vĩ | Vietnam Unique Travel', 'Khám phá cao nguyên đá Hà Giang với các hành trình trekking và trải nghiệm văn hóa.');
+-- Insert into destination_translations
+INSERT IGNORE INTO `destination_translations` (`id`, `destination_id`, `lang`, `name`, `short_description`, `description`, `seo_title`, `seo_description`) VALUES ('1', '1', 'en', 'Pu Luong Nature Reserve', 'Pristine limestone karsts, lush terraced rice fields, vibrant Thai ethnic villages and roaring waterfalls.', 'Pu Luong Nature Reserve is a haven of serene mountain landscapes, endless rice terraces, and authentic ethnic minority culture located in Thanh Hoa province.', 'Pu Luong Nature Reserve Tours | Vietnam Unique Travel', 'Discover authentic Pu Luong tours with trekking, bamboo rafting, waterfalls, and ethnic stilt houses.');
+INSERT IGNORE INTO `destination_translations` (`id`, `destination_id`, `lang`, `name`, `short_description`, `description`, `seo_title`, `seo_description`) VALUES ('2', '1', 'vi', 'Khu Bảo Tồn Thiên Nhiên Pù Luông', 'Vùng đất hoang sơ với ruộng bậc thang hùng vĩ, bản làng người Thái và những dòng thác kỳ vĩ.', 'Khu bảo tồn thiên nhiên Pù Luông thuộc tỉnh Thanh Hóa, nơi sở hữu những thửa ruộng bậc thang ngút ngàn, dãy núi đá vôi hùng vĩ và các bản làng người Thái yên bình.', 'Tour Pù Luông Trải Nghiệm Độc Đáo | Vietnam Unique Travel', 'Khám phá các chương trình tour Pù Luông trekking, đi bè tre, ngắm thác Hiêu và trải nghiệm văn hóa bản địa.');
+INSERT IGNORE INTO `destination_translations` (`id`, `destination_id`, `lang`, `name`, `short_description`, `description`, `seo_title`, `seo_description`) VALUES ('3', '2', 'en', 'Mai Chau Valley', 'Idyllic valley surrounded by emerald mountains and traditional White Thai ethnic villages.', 'Mai Chau is famous for its peaceful rural scenery, wooden stilt houses, warm hospitality, and traditional brocade weaving.', 'Mai Chau Valley Tours | Vietnam Unique Travel', 'Explore Mai Chau valley with cycling, homestay experience, and local culture.');
+INSERT IGNORE INTO `destination_translations` (`id`, `destination_id`, `lang`, `name`, `short_description`, `description`, `seo_title`, `seo_description`) VALUES ('4', '2', 'vi', 'Thung Lũng Mai Châu', 'Thung lũng yên bình với núi rừng xanh mướt và những bản làng người Thái Trắng.', 'Mai Châu nổi tiếng với khung cảnh nông thôn yên bình, những nếp nhà sàn bằng gỗ và văn hóa dệt thổ cẩm lâu đời.', 'Tour Mai Châu Trải Nghiệm | Vietnam Unique Travel', 'Khám phá thung lũng Mai Châu với các hoạt động đạp xe, lưu trú nhà sàn và tìm hiểu văn hóa.');
+INSERT IGNORE INTO `destination_translations` (`id`, `destination_id`, `lang`, `name`, `short_description`, `description`, `seo_title`, `seo_description`) VALUES ('5', '3', 'en', 'Ninh Binh', 'Ha Long Bay on land featuring towering limestone karst towers and ancient riverways.', 'Ninh Binh offers dramatic karst landscapes, river boat trips through sacred caves, and ancient temples.', 'Ninh Binh Eco Tours | Vietnam Unique Travel', 'Authentic eco tours to Ninh Binh, Trang An, Tam Coc, and Cuc Phuong National Park.');
+INSERT IGNORE INTO `destination_translations` (`id`, `destination_id`, `lang`, `name`, `short_description`, `description`, `seo_title`, `seo_description`) VALUES ('6', '3', 'vi', 'Ninh Bình', 'Vịnh Hạ Long trên cạn với những dãy núi đá vôi kỳ vĩ và dòng sông uốn lượn.', 'Ninh Bình sở hữu cảnh quan karst kỳ vĩ, những dòng sông thơ mộng xuyên qua hang động và di tích lịch sử cổ kính.', 'Tour Du Lịch Ninh Bình | Vietnam Unique Travel', 'Hành trình khám phá Ninh Bình, Tràng An, Tam Cốc và Vườn Quốc Gia Cúc Phương.');
+INSERT IGNORE INTO `destination_translations` (`id`, `destination_id`, `lang`, `name`, `short_description`, `description`, `seo_title`, `seo_description`) VALUES ('7', '4', 'en', 'Ha Giang Loop', 'Spectacular northern mountain frontier with dramatic passes, deep canyons and vibrant hill tribes.', 'Ha Giang is Vietnam ultimate mountain frontier, boasting the famous Ma Pi Leng pass and unique ethnic diversity.', 'Ha Giang Mountain Tours | Vietnam Unique Travel', 'Explore Ha Giang loop with responsible trekking and motorbike tours.');
+INSERT IGNORE INTO `destination_translations` (`id`, `destination_id`, `lang`, `name`, `short_description`, `description`, `seo_title`, `seo_description`) VALUES ('8', '4', 'vi', 'Hà Giang', 'Vùng núi phía Bắc hùng vĩ với những con đèo hiểm trở, hẻm vực sâu và bản làng cao nguyên đá.', 'Hà Giang là mảnh đất địa đầu Tổ quốc với đèo Mã Pí Lèng kỳ vĩ và những nét văn hóa đa dạng của đồng bào tộc người.', 'Tour Hà Giang Hùng Vĩ | Vietnam Unique Travel', 'Khám phá cao nguyên đá Hà Giang với các hành trình trekking và trải nghiệm văn hóa.');
 
--- 3. Insert Categories / Experiences
-INSERT IGNORE INTO `categories` (`id`, `slug`, `icon`, `image`, `sort_order`, `status`) VALUES
-(1, 'trekking-hiking', 'ph-footprints', '/assets/images/hero.webp', 1, 1),
-(2, 'motorbike-cycling', 'ph-motorbike', '/assets/images/water-wheels.webp', 2, 1),
-(3, 'local-culture', 'ph-house-line', '/assets/images/silk-weaving.webp', 3, 1),
-(4, 'waterfalls-rivers', 'ph-waves', '/assets/images/hieu-waterfall.webp', 4, 1),
-(5, 'responsible-tourism', 'ph-leaf', '/assets/images/bamboo-rafting.webp', 5, 1);
+-- Insert into categories
+INSERT IGNORE INTO `categories` (`id`, `slug`, `icon`, `image`, `sort_order`, `status`, `created_at`) VALUES ('1', 'trekking', 'ph-footprints', '/assets/images/hero.webp', '1', '1', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `categories` (`id`, `slug`, `icon`, `image`, `sort_order`, `status`, `created_at`) VALUES ('2', 'adventure', 'ph-motorbike', '/assets/images/water-wheels.webp', '2', '1', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `categories` (`id`, `slug`, `icon`, `image`, `sort_order`, `status`, `created_at`) VALUES ('3', 'cultural', 'ph-house-line', '/assets/images/silk-weaving.webp', '3', '1', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `categories` (`id`, `slug`, `icon`, `image`, `sort_order`, `status`, `created_at`) VALUES ('4', 'nature', 'ph-waves', '/assets/images/hieu-waterfall.webp', '4', '1', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `categories` (`id`, `slug`, `icon`, `image`, `sort_order`, `status`, `created_at`) VALUES ('5', 'local-life', 'ph-users-three', '/assets/images/silk-weaving.webp', '5', '1', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `categories` (`id`, `slug`, `icon`, `image`, `sort_order`, `status`, `created_at`) VALUES ('6', 'private', 'ph-shield-check', '/assets/images/bamboo-rafting.webp', '6', '1', '2026-08-11 13:47:23');
 
-INSERT IGNORE INTO `category_translations` (`category_id`, `lang`, `name`, `description`) VALUES
-(1, 'en', 'Trekking & Hiking', 'Explore untamed mountain trails, lush valleys and serene rice terraces step by step.'),
-(1, 'vi', 'Trekking & Leo Núi', 'Khám phá những cung đường núi hoang sơ, thung lũng xanh và ruộng bậc thang qua từng bước chân.'),
-(2, 'en', 'Motorbike & Cycling', 'Feel the fresh mountain breeze on scenic backroads and secluded ethnic villages.'),
-(2, 'vi', 'Xe Máy & Đạp Xe', 'Tận hưởng gió núi mây ngàn trên các con đường làng thơ mộng và bản làng xa xôi.'),
-(3, 'en', 'Local Culture & Heritage', 'Immerse in authentic Thai and Muong ethnic traditions, silk weaving, and home hospitality.'),
-(3, 'vi', 'Văn Hóa Bản Địa', 'Hòa mình vào phong tục truyền thống của người Thái, Muong, dệt thổ cẩm và ẩm thực nhà sàn.'),
-(4, 'en', 'Waterfalls & Rivers', 'Swim in crystal streams, petrified stone waterfalls, and ride handmade bamboo rafts.'),
-(4, 'vi', 'Thác Nước & Dòng Sông', 'Đắm mình trong làn nước mát rượi của thác Hiêu và chèo bè tre trên dòng suối Cham.'),
-(5, 'en', 'Responsible & Community Tourism', 'Travel with positive impact, supporting indigenous families and eco-preservation.'),
-(5, 'vi', 'Du Lịch Có Trách Nhiệm', 'Mỗi chuyến đi góp phần tạo sinh kế bền vững và bảo vệ môi trường, văn hóa bản địa.');
+-- Insert into category_translations
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('1', '1', 'en', 'Trekking', 'Trekking & Hiking');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('2', '1', 'vi', 'Trekking & Leo Núi', 'Trekking & Leo Núi');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('3', '2', 'en', 'Adventure', 'Motorbike & Adventure');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('4', '2', 'vi', 'Xe Máy & Phiêu Lưu', 'Xe Máy & Phiêu Lưu');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('5', '3', 'en', 'Cultural', 'Culture & Heritage');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('6', '3', 'vi', 'Văn Hóa Bản Địa', 'Văn Hóa Bản Địa');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('7', '4', 'en', 'Nature', 'Nature & Waterfalls');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('8', '4', 'vi', 'Thiên Nhiên & Thác Nước', 'Thiên Nhiên & Thác Nước');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('9', '5', 'en', 'Local Life', 'Local Life & Community');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('10', '5', 'vi', 'Đời Sống Bản Địa', 'Đời Sống Bản Địa');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('43', '6', 'en', 'Private', 'Private & Tailored Journeys');
+INSERT IGNORE INTO `category_translations` (`id`, `category_id`, `lang`, `name`, `description`) VALUES ('44', '6', 'vi', 'Hành Trình Riêng Biệt', 'Hành Trình Riêng Biệt');
 
--- 4. Insert 7 Signature Pu Luong Tours
-INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`) VALUES
-(1, 'PLHDT-01', 'bike-tours-hidden-villages-hieu-waterfall-adventure', 1, 'halfday', 1, 'easy', 'Motorbike with local guide', '1-6 pax', 22.00, 580000, '/assets/images/hieu-waterfall.webp', 1, 1, 1, 1, 1),
-(2, 'PLHDT-02', 'bike-tours-local-market-hidden-valley-discovery', 1, 'halfday', 1, 'easy', 'Motorbike or Private Car', '1-10 pax', 20.00, 520000, '/assets/images/hero.webp', 1, 1, 2, 2, 1),
-(3, 'PLHDT-03', 'trekking-tours-authentic-village-life-experience', 1, 'halfday', 1, 'easy', 'Trekking / Walking', '1-12 pax', 25.00, 600000, '/assets/images/silk-weaving.webp', 1, 1, 3, 3, 1),
-(4, 'PLHDT-04', 'car-bike-trekking-tours-threads-of-tradition', 1, 'halfday', 1, 'easy', 'Motorbike / Car + Bamboo Raft', '1-10 pax', 35.00, 850000, '/assets/images/bamboo-rafting.webp', 1, 0, 0, 4, 1),
-(5, 'PLFDT-01', 'medium-trekking-into-the-heart-of-pu-luong', 1, 'fullday', 1, 'medium', 'Trekking & Walking', '1-10 pax', 31.00, 800000, '/assets/images/water-wheels.webp', 1, 0, 0, 5, 1),
-(6, 'PLFDT-02', 'bike-car-short-trekking-pu-luong-signature-experience', 1, 'fullday', 1, 'easy', 'Motorbike or Car + Bamboo Raft', '1-12 pax', 43.00, 1130000, '/assets/images/hero.webp', 1, 0, 0, 6, 1),
-(7, 'PLFDT-03', 'hard-trekking-tours-conquer-pu-luong-peak', 1, 'fullday', 1, 'hard', 'Trekking / Mountain Climbing', '1-8 pax', 34.00, 900000, '/assets/images/hero.webp', 1, 0, 0, 7, 1);
+-- Insert into tours
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('1', 'PLHDT-01', 'bike-tours-hidden-villages-hieu-waterfall-adventure', '1', 'halfday', '1', 'easy', 'Motorbike with local guide', '1-6 pax', '22.00', '580000', '/assets/images/hieu-waterfall.webp', '1', '1', '1', '1', '1', '13', '2026-08-09 00:20:19', '2026-08-11 13:49:39');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('2', 'PLHDT-02', 'bike-tours-local-market-hidden-valley-discovery', '1', 'halfday', '1', 'easy', 'Motorbike or Private Car', '1-10 pax', '20.00', '520000', '/assets/images/hero.webp', '1', '1', '2', '2', '1', '3', '2026-08-09 00:20:19', '2026-08-09 16:46:46');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('3', 'PLHDT-03', 'trekking-tours-authentic-village-life-experience', '1', 'halfday', '1', 'easy', 'Trekking / Walking', '1-12 pax', '25.00', '600000', '/assets/images/silk-weaving.webp', '1', '1', '3', '3', '1', '2', '2026-08-09 00:20:19', '2026-08-09 19:41:11');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('4', 'PLHDT-04', 'car-bike-trekking-tours-threads-of-tradition', '1', 'halfday', '1', 'easy', 'Motorbike / Car + Bamboo Raft', '1-10 pax', '35.00', '850000', '/assets/images/bamboo-rafting.webp', '1', '1', '4', '4', '1', '0', '2026-08-09 00:20:19', '2026-08-11 13:47:23');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('5', 'PLFDT-01', 'medium-trekking-into-the-heart-of-pu-luong', '1', 'fullday', '1', 'medium', 'Trekking & Walking', '1-10 pax', '31.00', '800000', '/assets/images/water-wheels.webp', '1', '1', '5', '5', '1', '0', '2026-08-09 00:20:19', '2026-08-11 13:47:23');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('6', 'PLFDT-02', 'bike-car-short-trekking-pu-luong-signature-experience', '1', 'fullday', '1', 'easy', 'Motorbike or Car + Bamboo Raft', '1-12 pax', '43.00', '1130000', '/assets/images/hero.webp', '1', '1', '6', '6', '1', '0', '2026-08-09 00:20:19', '2026-08-11 13:47:23');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('7', 'PLFDT-03', 'hard-trekking-tours-conquer-pu-luong-peak', '1', 'fullday', '1', 'hard', 'Trekking / Mountain Climbing', '1-8 pax', '34.00', '900000', '/assets/images/hero.webp', '1', '1', '7', '7', '1', '0', '2026-08-09 00:20:19', '2026-08-11 13:47:23');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('8', 'MC-01', 'mai-chau-valley-cycling-white-thai-culture', '2', 'multiday', '2', 'easy', 'Private Car & Mountain Bikes', '1-10 pax', '145.00', '3650000', '/assets/images/water-wheels.webp', '1', '0', '8', '8', '1', '0', '2026-08-11 13:47:23', '2026-08-11 13:47:23');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('9', 'NB-01', 'ninh-binh-trang-an-karst-sanctuary-riverboat', '3', 'multiday', '2', 'easy', 'Private Car & Traditional Sampan', '1-12 pax', '165.00', '4150000', '/assets/images/bamboo-rafting.webp', '1', '0', '9', '9', '1', '0', '2026-08-11 13:47:23', '2026-08-11 13:47:23');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('10', 'PLMC-01', 'pu-luong-mai-chau-heritage-trekking-trail', '1', 'multiday', '3', 'medium', 'Private Transport & Trekking', '1-10 pax', '234.00', '5890000', '/assets/images/hero.webp', '1', '1', '10', '10', '1', '1', '2026-08-11 13:47:23', '2026-08-11 13:49:43');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('11', 'HG-01', 'ha-giang-loop-ma-pi-leng-canyon-expedition', '4', 'multiday', '4', 'medium', 'Private 4WD Car or Motorbike Easy Rider', '1-8 pax', '385.00', '9700000', '/assets/images/hieu-waterfall.webp', '1', '0', '11', '11', '1', '0', '2026-08-11 13:47:23', '2026-08-11 13:47:23');
+INSERT IGNORE INTO `tours` (`id`, `code`, `slug`, `destination_id`, `duration_type`, `duration_days`, `difficulty`, `transportation`, `group_size`, `price_from_usd`, `price_from_vnd`, `featured_image`, `is_featured`, `is_signature`, `signature_number`, `sort_order`, `status`, `views`, `created_at`, `updated_at`) VALUES ('12', 'NVN-01', 'grand-northern-vietnam-karsts-valleys-ethnic-odyssey', '4', 'multiday', '7', 'easy', 'Luxury Private Limousine & Private Guide', '1-8 pax', '750.00', '18900000', '/assets/images/hero.webp', '1', '1', '12', '12', '1', '0', '2026-08-11 13:47:23', '2026-08-11 13:47:23');
 
--- 5. Insert Tour Translations
-INSERT IGNORE INTO `tour_translations` (`tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES
-(1, 'en', 
- 'PLHDT – 01: BIKE TOURS: Hidden Villages & Hieu Waterfall Adventure', 
- 'Half-Day Motorbike Tour through Son – Ba Muoi – Hieu Village', 
- 'Experience an inspiring half-day motorbike journey through high-altitude cloud villages of Son - Ba Muoi and immerse in petrified Hieu Waterfall.', 
- '• Ride up to Son-Ba-Muoi village located 1,180m above sea level with cool misty weather.
-• Explore scenic trails through rice terraces and traditional Thai wooden stilt houses.
-• Discover Hieu Waterfall where trees and objects turn to stone over time.
-• Free time swimming in crystal-clear mountain waterfall pools.', 
- 'Son Ba Muoi village is nestled between craggy mountain ranges at an altitude of 1,180m, bringing a virgin beauty like Sa Pa or Da Lat. Continue your ride to Hieu village and follow small trails through rice terraces to Hieu waterfall cascading down 800 meters.', 
- '• Mineral water
+-- Insert into tour_translations
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('1', '1', 'en', 'Hidden Villages & Hieu Waterfall Adventure', 'Half-Day Motorbike Journey to Son-Ba-Muoi Cloud Villages', 'Experience an inspiring half-day motorbike journey through high-altitude cloud villages of Son - Ba Muoi and immerse in petrified Hieu Waterfall.', '• Ride up to Son-Ba-Muoi village located 1,180m above sea level.
+• Explore scenic trails through rice terraces and traditional Thai stilt houses.
+• Discover Hieu Waterfall where limestone water petrifies objects.
+• Free time swimming in crystal-clear mountain pools.', 'Son Ba Muoi village is nestled between craggy mountain ranges at an altitude of 1,180m, bringing virgin beauty.', '• Mineral water
 • Local driver/guide
-• Entrance tickets to Hieu waterfall', 
- '• Personal expenses and tips
+• Entrance tickets to Hieu waterfall', '• Personal expenses and tips
 • English speaking guide surcharge ($10 / 265k VND per guide)
-• Travel insurance', 
- '• Comfortable clothing and walking shoes
+• Travel insurance', '• Comfortable clothing and walking shoes
 • Swimwear and towel if warm weather
-• Sunscreen and camera', 
- '• Children aged 5+ pay same price as adults for motorbike seat.', 
- '• Free cancellation up to 24 hours before departure.', 
- 'Hidden Villages & Hieu Waterfall Adventure Tour | Vietnam Unique Travel', 
- 'Book PLHDT-01 half-day motorbike tour to Son Ba Muoi high village and Hieu Waterfall in Pu Luong.'),
-
-(1, 'vi', 
- 'PLHDT – 01: TOUR XE MÁY: Khám Phá Bản Ẩn Mình & Thác Hiêu', 
- 'Hành trình nửa ngày bằng xe máy qua Sơn – Bá Mười – Bản Hiêu', 
- 'Trải nghiệm nửa ngày bằng xe máy vượt qua vùng cao Son Bá Mười bồng bềnh mây phủ và ngâm mình tại dòng thác Hiêu hóa đá kỳ thú.', 
- '• Chinh phục bản Sơn Bá Mười ở độ cao 1.180m khí hậu mát mẻ như Sa Pa.
+• Sunscreen and camera', '• Children aged 5+ pay same price as adults for motorbike seat.', '• Free cancellation up to 24 hours before departure.', 'Hidden Villages & Hieu Waterfall Adventure Tour | Vietnam Unique Travel', 'Book PLHDT-01 half-day motorbike tour to Son Ba Muoi high village and Hieu Waterfall in Pu Luong.');
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('2', '1', 'vi', 'Khám Phá Bản Ẩn Mình & Thác Hiêu Bằng Xe Máy', 'Hành trình nửa ngày bằng xe máy qua Sơn – Bá Mười – Bản Hiêu', 'Trải nghiệm nửa ngày bằng xe máy vượt qua vùng cao Son Bá Mười bồng bềnh mây phủ và ngâm mình tại dòng thác Hiêu hóa đá kỳ thú.', '• Chinh phục bản Sơn Bá Mười ở độ cao 1.180m mát mẻ như Sa Pa.
 • Ngắm nhìn ruộng bậc thang và nếp nhà sàn người Thái ẩn hiện.
-• Khám phá thác Hiêu với hiện tượng nước vôi hóa đá độc đáo.
-• Tự do tắm mát tại hồ nước tự nhiên dưới chân thác.', 
- 'Sơn Bá Mười nằm ở độ cao 1.180m so với mực nước biển, bao bọc bởi những dãy núi đá vôi trập trùng. Du khách sẽ đi xe máy cùng người bản địa, băng qua lối nhỏ ruộng bậc thang đến bản Hiêu và thác Hiêu mát rượi.', 
- '• Nước uống chai
+• Khám phá thác Hiêu hóa đá độc đáo và tự do tắm suối.', 'Sơn Bá Mười nằm ở độ cao 1.180m so với mực nước biển, bao bọc bởi những dãy núi đá vôi trập trùng.', '• Nước uống chai
 • Lái xe / HDV bản địa
-• Vé tham quan thác Hiêu', 
- '• Chi phí cá nhân và tiền tip
+• Vé tham quan thác Hiêu', '• Chi phí cá nhân và tiền tip
 • Phụ thu Hướng dẫn viên tiếng Anh (265.000đ / $10 cho 1 HDV)
-• Bảo hiểm du lịch', 
- '• Trang phục thoải mái, giày đi bộ
+• Bảo hiểm du lịch', '• Trang phục thoải mái, giày đi bộ
 • Đồ bơi và khăn tắm nếu tắm thác
-• Kem chống nắng, máy ảnh', 
- '• Trẻ em từ 5 tuổi trở lên tính giá như người lớn (1 người/1 xe).', 
- '• Miễn phí đổi ngày/hủy tour trước 24 giờ khởi hành.', 
- 'Tour Xe Máy Khám Phá Bản Hiêu & Thác Hiêu Pù Luông | VNU', 
- 'Đặt tour xe máy nửa ngày khám phá Sơn Bá Mười và Thác Hiêu Pù Luông cùng Vietnam Unique Travel.'),
-
-(2, 'en', 
- 'PLHDT – 02: BIKE TOURS: Local Market & Hidden Valley Discovery', 
- 'Doan Fair Market, Hieu Village, Hieu Waterfall & Brocade Weaving Village (Thu & Sun Only)', 
- 'Discover the vibrant authentic ethnic atmosphere of Doan Market, pristine Hieu Waterfall, Co Lung duck farm, and Thai brocade weaving artisans.', 
- '• Visit traditional Doan Market (open Thursdays & Sundays only) trading Kinh, Muong & Thai goods.
+• Kem chống nắng, máy ảnh', '• Trẻ em từ 5 tuổi trở lên tính giá như người lớn (1 người/1 xe).', '• Miễn phí đổi ngày/hủy tour trước 24 giờ khởi hành.', 'Tour Xe Máy Khám Phá Bản Hiêu & Thác Hiêu Pù Luông | VNU', 'Đặt tour xe máy nửa ngày khám phá Sơn Bá Mười và Thác Hiêu Pù Luông cùng Vietnam Unique Travel.');
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('3', '2', 'en', 'Pho Doan Market & Lan Brocade Weaving Village', 'Authentic Ethnic Highland Market & Traditional Thai Looms', 'Discover the vibrant authentic ethnic atmosphere of Doan Market, pristine Hieu Waterfall, Co Lung duck farm, and Thai brocade weaving artisans.', '• Visit traditional Doan Market trading Kinh, Muong & Thai goods.
 • Taste local street food delicacies and buy handmade souvenirs.
-• Trek to Hieu Waterfall and see the famed Co Lung ducks.
-• Visit Lan Village brocade weaving artisans and try traditional looms.', 
- 'Doan Market dates back to French colonial times, serving as a trading hub for Kinh, Muong, and Thai communities. Explore local products, exotic spices, and textiles before heading to Hieu Village and Lan weaving village.', 
- '• Mineral water
+• Trek to Hieu Waterfall and see famed Co Lung ducks.
+• Visit Lan Village brocade weaving artisans and try looms.', 'Doan Market dates back to French colonial times, serving as a trading hub for Kinh, Muong, and Thai communities.', '• Mineral water
 • Guide
-• Entrance tickets to Hieu waterfall', 
- '• Personal shopping expenses & street food tasting
+• Entrance tickets to Hieu waterfall', '• Personal shopping expenses & street food tasting
 • English speaking guide surcharge ($8 / 210k VND per group)
-• Travel insurance', 
- '• Cash in VND for market shopping
-• Comfortable clothes & camera', 
- '• Children >=10 years counted as adult; Children 6-9 years 50% adult price for car option.', 
- '• Free cancellation up to 24 hours prior.', 
- 'Doan Fair Market & Hidden Valley Discovery Tour | Vietnam Unique Travel', 
- 'Book PLHDT-02 tour visiting Doan ethnic market, Hieu Waterfall and Lan brocade village.'),
-
-(2, 'vi', 
- 'PLHDT – 02: TOUR XE MÁY / Ô TÔ: Chợ Phố Đoàn & Thung Lũng Ẩn', 
- 'Chợ Phố Đoàn – Bản Hiêu – Thác Hiêu – Trang Trại Vịt – Bản Lan Dệt Thổ Cẩm (Thứ 5 & Chủ Nhật)', 
- 'Hòa mình vào không khí chợ phiên Phố Đoàn rực rỡ sắc màu, ngắm thác Hiêu, trang trại vịt Cổ Lũng và làng dệt thổ cẩm truyền thống.', 
- '• Ghép phiên chợ Phố Đoàn (chỉ họp vào sáng Thứ 5 & Chủ Nhật) đậm chất vùng cao.
-• Thưởng thức ẩm thực đường phố và mua quà lưu niệm thủ công độc đáo.
-• Ghé thăm thác Hiêu và tìm hiểu giống vịt Cổ Lũng đặc sản Pù Luông.
-• Trải nghiệm dệt thổ cẩm cùng nghệ nhân người Thái tại Bản Lan.', 
- 'Chợ Phố Đoàn là nơi giao thương văn hóa rực rỡ từ thời Pháp thuộc giữa đồng bào Thái, Mường, Kinh. Tour kết hợp tham quan thác Hiêu và làng nghề dệt vải thổ cẩm thủ công.', 
- '• Nước uống
+• Travel insurance', '• Cash in VND for market shopping
+• Comfortable clothes & camera', '• Children >=10 years counted as adult; Children 6-9 years 50% adult price for car option.', '• Free cancellation up to 24 hours prior.', 'Doan Fair Market & Hidden Valley Discovery Tour | Vietnam Unique Travel', 'Book PLHDT-02 tour visiting Doan ethnic market, Hieu Waterfall and Lan brocade village.');
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('4', '2', 'vi', 'Chợ Phiên Phố Đoàn & Làng Dệt Thổ Cẩm Bản Lan', 'Chợ Phố Đoàn – Bản Hiêu – Thác Hiêu – Bản Lan Dệt Thổ Cẩm', 'Hòa mình vào không khí chợ phiên Phố Đoàn rực rỡ sắc màu, ngắm thác Hiêu, trang trại vịt Cổ Lũng và làng dệt thổ cẩm truyền thống.', '• Ghé phiên chợ Phố Đoàn đậm chất vùng cao.
+• Thưởng thức ẩm thực đường phố và quà lưu niệm thủ công.
+• Trải nghiệm dệt thổ cẩm cùng nghệ nhân người Thái tại Bản Lan.', 'Chợ Phố Đoàn là nơi giao thương văn hóa rực rỡ từ thời Pháp thuộc giữa đồng bào Thái, Mường, Kinh.', '• Nước uống
 • Hướng dẫn viên
-• Vé tham quan thác Hiêu', 
- '• Mua sắm cá nhân tại chợ
+• Vé tham quan thác Hiêu', '• Mua sắm cá nhân tại chợ
 • Phụ thu HDV tiếng Anh (210.000đ / $8)
-• Bảo hiểm', 
- '• Tiền mặt VND mua quà chợ
-• Trang phục nhẹ nhàng', 
- '• Trẻ em >=10 tuổi tính như người lớn. Trẻ 6-9 tuổi tính 50% người lớn (cho phương án đi ô tô).', 
- '• Hủy trước 24 giờ không mất phí.', 
- 'Tour Chợ Phiên Phố Đoàn & Thác Hiêu Pù Luông | VNU', 
- 'Hành trình nửa ngày trải nghiệm chợ Phố Đoàn, thác Hiêu và làng dệt dệt thổ cẩm bản Lan.'),
+• Bảo hiểm', '• Tiền mặt VND mua quà chợ
+• Trang phục nhẹ nhàng', '• Trẻ em >=10 tuổi tính như người lớn. Trẻ 6-9 tuổi tính 50% người lớn (cho phương án đi ô tô).', '• Hủy trước 24 giờ không mất phí.', 'Tour Chợ Phiên Phố Đoàn & Thác Hiêu Pù Luông | VNU', 'Hành trình nửa ngày trải nghiệm chợ Phố Đoàn, thác Hiêu và làng dệt dệt thổ cẩm bản Lan.');
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('18', '3', 'en', 'Authentic Village Life & Organic Farm Trekking', 'Scenic Walking Journey through Don & Uoi Valleys', 'Immerse in tranquil Black Thai ethnic communities, walking along terraced paths and visiting organic family farms and traditional herb gardens.', '• Walk through Don & Uoi ethnic Thai villages.
+• Learn ancient farming and herb medicine techniques.
+• Enjoy organic herbal tea with local host families.
+• Stunning valley views for photography.', 'An easy-paced walking journey perfect for families and culture lovers seeking authentic contact with villagers.', '• Mineral water & local guide
+• Tropical fruits tasting', '• Personal expenses & tips
+• Travel insurance', '• Comfortable walking shoes
+• Sun hat & camera', '• Children 5+ pay adult price.', '• Free cancellation up to 24 hours prior.', 'Authentic Village Life Trekking Tour | Vietnam Unique Travel', 'Book PLHDT-03 half-day walking trek through traditional Pu Luong stilt villages.');
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('19', '3', 'vi', 'Đời Sống Bản Làng & Đi Bộ Thung Lũng Bản Đôn', 'Đi bộ qua Bản Đôn – Bản Ươi – Vườn Thảo Dược Hữu Cơ', 'Hòa mình vào nếp sống mộc mạc của đồng bào Thái Đen, dạo bước qua các thửa ruộng bậc thang và thăm vườn dược liệu gia đình.', '• Đi bộ thư thái qua bản Đôn và bản Ươi.
+• Tìm hiểu phương pháp canh tác và thảo dược cổ truyền.
+• Thưởng thức trà thảo mộc cùng bà con bản địa.', 'Chuyến đi bộ nhẹ nhàng khám phá chiều sâu văn hóa và lối sống hài hòa cùng thiên nhiên của người Thái.', '• Nước uống & Hướng dẫn viên bản địa
+• Thưởng thức hoa quả tươi', '• Chi phí cá nhân & tiền tip
+• Bảo hiểm du lịch', '• Giày đi bộ thoải mái
+• Mũ che nắng & máy ảnh', '• Trẻ em từ 5 tuổi tính giá người lớn.', '• Hủy trước 24 giờ miễn phí.', 'Tour Trekking Khám Phá Bản Đón Pù Luông | Vietnam Unique Travel', 'Đặt tour trekking nửa ngày PLHDT-03 trải nghiệm cuộc sống người Thái Pù Luông.');
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('26', '4', 'en', 'Cham River Bamboo Rafting & Giant Water Wheels', 'Hands-on Bamboo Rafting on Cham River & Ancient Water Wheels', 'Drift along calm crystal waters of Cham River on handmade bamboo rafts and witness monumental century-old bamboo water wheels.', '• Paddle authentic bamboo rafts down Cham river.
+• Inspect ingenious hydraulic bamboo water wheels.
+• Experience peaceful mountain river scenery.
+• Visit traditional riverside Thai settlements.', 'A serene eco-adventure capturing the traditional hydraulic craftsmanship and tranquil river life of Pu Luong.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('27', '4', 'vi', 'Chèo Bè Tre Suối Chàm & Guồng Nước Khổng Lồ', 'Trải nghiệm chèo bè tre thủ công và chiêm ngưỡng cọn nước Pù Luông', 'Lướt nhẹ trên dòng suối Chàm trong vắt bằng bè tre mộc mạc và chiêm ngưỡng những guồng nước khổng lồ kỳ công của người Thái.', '• Tự tay chèo bè tre truyền thống trên suối Chàm.
+• Tìm hiểu nguyên lý hoạt động của cọn nước đưa nước lên đồng cao.
+• Khung cảnh non nước thơ mộng, không khí trong lành.', 'Trải nghiệm du lịch sinh thái đậm chất sông nước vùng cao đầy thư thái và ấn tượng.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('28', '5', 'en', 'Deep Valley Trekking: Into the Heart of Pu Luong', 'Full-Day 14km Trek across Kho Muong & Hidden Terraced Valleys', 'Hike deep into Kho Muong valley, explore the mysterious Bat Cave, traverse limestone passes and feast on traditional homecooked lunch.', '• 14km scenic trek across diverse mountain terrain.
+• Explore Kho Muong valley and limestone Bat Cave.
+• Authentic ethnic Thai homecooked lunch on stilt house.
+• Deep dive into primary rainforest and terrace networks.', 'Our premier full-day trekking route designed for active travelers wanting to see the virgin core of Pu Luong Nature Reserve.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('29', '5', 'vi', 'Trekking Xuyên Thung Lũng Trái Tim Pù Luông', 'Hành trình 14km khám phá Bản Kho Mường, Hang Dơi và thung lũng lúa', 'Đi bộ sâu vào lòng thung lũng Kho Mường hoang sơ, thám hiểm Hang Dơi kỳ bí và thưởng thức bữa trưa đậm đà bản sắc người Thái.', '• Cung đường trekking 14km qua các địa hình đa dạng.
+• Khám phá bản Kho Mường cô lập và Hang Dơi kỳ vĩ.
+• Bữa trưa đặc sản nướng trên nhà sàn truyền thống.', 'Hành trình trekking hoàn hảo cho du khách yêu thiên nhiên và mong muốn thử thách thể lực vừa phải.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('30', '6', 'en', 'Pu Luong Signature Panorama: All-in-One Experience', 'Full-Day Waterfalls, Rice Terraces, Bamboo Rafts & High Cloud Villages', 'The ultimate curated all-in-one day: visit Son-Ba-Muoi clouds, Hieu waterfall swimming, bamboo rafting on Cham river, and silk weaving.', '• Complete highlights of Pu Luong in a single seamless day.
+• Son-Ba-Muoi cloud village viewpoint at 1,180m.
+• Swim at cascading Hieu Waterfall.
+• Romantic bamboo raft river drift.', 'Perfect for travelers with limited time who want to experience the finest highlights of Pu Luong with premium comfort.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('31', '6', 'vi', 'Hành Trình Tinh Hoa Pù Luông: Trọn Vẹn 1 Ngày', 'Trọn vẹn Thác Hiêu, Bản Son Bá Mười, Bè Tre & Làng Dệt', 'Chuyến đi hoàn hảo kết hợp đầy đủ nét tinh hoa: săn mây Son Bá Mười, tắm thác Hiêu, chèo bè tre suối Chàm và trải nghiệm dệt thổ cẩm.', '• Gói trọn tinh hoa Pù Luông trong 1 ngày thoải mái.
+• Điểm ngắm cảnh mây mù Son Bá Mười 1.180m.
+• Tắm thác Hiêu mát lành và đi bè tre suối Chàm.', 'Lựa chọn lý tưởng cho các gia đình và nhóm bạn muốn tận hưởng trọn vẹn cảnh sắc Pù Luông.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('32', '7', 'en', 'Summit Expedition: Conquer Pu Luong Peak (1,700m)', 'Full-Day Mountain Summit Trekking & Panoramic Cloudview BBQ', 'Challenge yourself conquering the highest summit of Pu Luong at 1,700m, traversing ancient primary jungle and celebrating with peak BBQ lunch.', '• Conquer highest peak of Pu Luong (1,700m elevation).
+• Pristine primary oak and bamboo forests.
+• Panoramic 360-degree mountain & cloud ridge views.
+• Summit mountain picnic & herbal foot soak finish.', 'An exhilarating mountaineering adventure for experienced trekkers seeking untamed wilderness.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('33', '7', 'vi', 'Chinh Phục Đỉnh Núi Pù Luông 1.700m Hùng Vĩ', 'Trekking đỉnh núi cao nhất Pù Luông và tiệc BBQ ngắm biển mây', 'Thử thách giới hạn bản thân khi chinh phục nóc nhà Pù Luông ở độ cao 1.700m, băng qua rừng nguyên sinh cổ thụ và thưởng thức tiệc nướng trên đỉnh.', '• Chinh phục đỉnh núi cao 1.700m ngoạn mục.
+• Băng qua rừng trúc và thảm thực vật nguyên sinh.
+• Tầm nhìn 360 độ ngắm biển mây bao la.
+• Ngâm chân thảo dược xua tan mệt mỏi cuối ngày.', 'Hành trình leo núi đỉnh cao dành cho các bạn trẻ đam mê chinh phục thử thách.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('34', '8', 'en', 'Mai Chau Emerald Valley Cycling & White Thai Heritage', '2 Days 1 Night Idyllic Stilt House Living & Traditional Folk Dance', 'Cycle through serene emerald rice valleys, stay overnight in a traditional White Thai wooden stilt house, and enjoy ethnic music and culinary treats.', '• Scenic cycling through Lac, Pom Coong & Van villages.
+• Overnight at charming traditional stilt house homestay.
+• Enjoy White Thai traditional bamboo dance & Ruou Can wine.
+• Hand-weaving textile workshops with local artisans.', 'An authentic peaceful escape into the pastoral valley of Mai Chau, blending cycling, culture, and hospitable family warmth.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('35', '8', 'vi', 'Đạp Xe Thung Lũng Mai Châu & Văn Hóa Người Thái Trắng', '2 Ngày 1 Đêm Lưu Trú Nhà Sàn & Thưởng Thức Múa Xòe Thái', 'Đạp xe qua những thung lũng lúa xanh mướt, nghỉ đêm tại nhà sàn gỗ truyền thống người Thái Trắng và hòa mình vào điệu múa sạp rộn ràng.', '• Đạp xe qua Bản Lác, Pom Coọng và bản Vặn yên bình.
+• Nghỉ đêm tại nhà sàn ấm cúng cùng gia đình bản địa.
+• Thưởng thức rượu cần và chương trình múa xòe cổ truyền.', 'Chuyến nghỉ dưỡng nhẹ nhàng tìm về không gian nông thôn thanh bình và mến khách.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('36', '9', 'en', 'Ninh Binh Karst Sanctuary & Sacred Riverboat Odyssey', '2 Days 1 Night Trang An UNESCO Caves, Tam Coc & Hang Mua Peak', 'Glide through mystical water caves in Trang An UNESCO World Heritage, climb 500 stone steps to Hang Mua dragon viewpoint and cycle rural lanes.', '• Traditional sampan boat cruise through Trang An grottoes.
+• Climb Hang Mua Dragon mountain for breathtaking vistas.
+• Cycle along peaceful lotus ponds and limestone karsts.
+• Visit ancient capital Hoa Lu and sacred temples.', 'Discover the legendary Ha Long Bay on land with secluded eco-trails avoiding large tour crowds.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('37', '9', 'vi', 'Kỳ Quan Tràng An Ninh Bình & Hành Trình Thuyền Rồng', '2 Ngày 1 Đêm Khám Phá Di Sản Tràng An, Tam Cốc & Đỉnh Hang Múa', 'Lướt thuyền nan qua quần thể hang động Tràng An huyền ảo, chinh phục 500 bậc đá Hang Múa ngắm trọn vẹn Tam Cốc từ trên cao.', '• Đi thuyền nan xuyên qua hệ thống hang động Tràng An.
+• Chinh phục Đỉnh Hang Múa ngắm toàn cảnh sông núi hữu tình.
+• Đạp xe ngắm đầm sen và thăm cố đô Hoa Lư cổ kính.', 'Hành trình di sản văn hóa và thiên nhiên thế giới độc đáo tại Ninh Bình.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('38', '10', 'en', 'Pu Luong & Mai Chau Mountain Heritage Trail', '3 Days 2 Nights Cross-Regional Ridge Trekking, Bamboo Rafts & Eco-Lodges', 'Connect two iconic mountain valleys on an exclusive 3-day expedition featuring ridge trekking, mountain streams, bamboo rafting and eco-resort comfort.', '• Cross-border scenic trekking between Mai Chau and Pu Luong.
+• 2 nights in boutique mountain eco-lodges overlooking rice terraces.
+• Bamboo rafting along Cham river and waterfall swim.
+• Intimate cultural immersion with White Thai & Muong communities.', 'Our flagship 3-day mountain expedition blending active trekking adventure with tasteful comfort and rich cultural storytelling.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('39', '10', 'vi', 'Cung Đường Di Sản Ẩn Mình Pù Luông – Mai Châu', '3 Ngày 2 Đêm Trekking Băng Đèo, Chèo Bè Tre & Nghỉ Dưỡng Sinh Thái', 'Hành trình 3 ngày kết nối hai thung lũng tuyệt đẹp: trekking băng rừng nguyên sinh, đi bè tre suối Chàm và nghỉ dưỡng tại eco-lodge nhìn ra thung lũng.', '• Tuyến trekking kết nối cảnh sắc Mai Châu và Pù Luông.
+• 2 đêm nghỉ tại khu nghỉ dưỡng sinh thái sang trọng giữa thiên nhiên.
+• Trọn vẹn các trải nghiệm: tắm thác, chèo bè tre, ẩm thực núi rừng.', 'Chương trình signature 3 ngày 2 đêm được yêu thích nhất của Vietnam Unique Travel.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('40', '11', 'en', 'Ha Giang Loop: Ma Pi Leng Canyon & Dong Van Karst Plateau', '4 Days 3 Nights Legendary Mountain Passes & Emerald Nho Que River', 'Explore Vietnam ultimate northern frontier: conquer Ma Pi Leng Pass, boat through Tu San Canyon, and witness the vibrant colors of Hmong and Dao markets.', '• Conquer legendary Ma Pi Leng Pass and Sky Walk cliff trail.
+• Emerald boat cruise through Tu San Canyon on Nho Que river.
+• Dong Van ancient town and Hmong King Palace history.
+• Authentic homestays with warm ethnic minority hosts.', 'The ultimate mountain road trip through UNESCO Dong Van Karst Geopark with our expert local navigators.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('41', '11', 'vi', 'Hùng Vĩ Hà Giang: Hẻm Vực Mã Pí Lèng & Cao Nguyên Đá', '4 Ngày 3 Đêm Khám Phá Tứ Đại Đỉnh Đèo & Dòng Sông Nho Quế', 'Khám phá mảnh đất địa đầu Tổ quốc: chinh phục đèo Mã Pí Lèng, chèo thuyền hẻm vực Tu Sản sông Nho Quế và hòa mình vào sắc màu văn hóa H''Mông.', '• Chinh phục cung đường đèo Mã Pí Lèng huyền thoại.
+• Du thuyền ngắm hẻm vực Tu Sản sâu nhất Đông Nam Á.
+• Thăm phố cổ Đồng Văn và Dinh thự Vua Mèo cổ kính.', 'Chuyến phiêu lưu đáng nhớ nhất trên cung đường cao nguyên đá hùng vĩ.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('42', '12', 'en', 'Grand Northern Vietnam: Karsts, Valleys & Living Traditions', '7 Days 6 Nights Bespoke Private Journey: Hanoi – Mai Chau – Pu Luong – Ninh Binh', 'A comprehensive 7-day luxury private journey combining northern Vietnam most breathtaking destinations: emerald valleys, pristine nature reserves and karst rivers.', '• Fully customizable private limousine and dedicated travel curator.
+• 6 nights luxury boutique eco-resorts with panoramic mountain views.
+• Curated culinary banquets featuring fresh organic ethnic delicacies.
+• Exclusive off-the-grid cultural experiences with community leaders.', 'Our ultimate comprehensive grand journey designed for discerning international travelers seeking authenticity without compromising comfort.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT IGNORE INTO `tour_translations` (`id`, `tour_id`, `lang`, `title`, `sub_title`, `short_description`, `highlights`, `overview`, `inclusions`, `exclusions`, `what_to_bring`, `child_policy`, `cancellation_policy`, `seo_title`, `seo_description`) VALUES ('43', '12', 'vi', 'Đại Hành Trình Miền Bắc: Vòng Cung Kỳ Vĩ & Văn Hóa Bản Địa', '7 Ngày 6 Đêm Tour Riêng Cao Cấp: Hà Nội – Mai Châu – Pù Luông – Ninh Bình', 'Hành trình 7 ngày cao cấp kết nối các điểm đến đẹp nhất miền Bắc: thung lũng Mai Châu, thiên nhiên hoang sơ Pù Luông và non nước Tràng An Ninh Bình.', '• Xe riêng Limousine cao cấp và Hướng dẫn viên chuyên nghiệp riêng.
+• 6 đêm nghỉ dưỡng tại các Resort/Eco-lodge sang trọng nhất.
+• Thưởng thức tinh hoa ẩm thực địa phương được chế biến tinh tế.', 'Hành trình tinh hoa bậc nhất dành cho du khách muốn khám phá trọn vẹn vẻ đẹp miền Bắc Việt Nam.', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-(3, 'en',
- 'PLHDT – 03: TREKKING TOURS: Authentic Village Life Experience',
- 'Half-Day Walking & Cultural Trek through Don & Bang Villages',
- 'Immerse yourself in peaceful Thai ethnic stilt houses, emerald rice terraces, and traditional bamboo water wheels.',
- '• Easy walking trek through serene rice fields and historic Thai minority villages.
-• Meet local Thai families and learn about centuries-old rice farming techniques.
-• Discover iconic bamboo water wheels along the Cham river.
-• Enjoy complimentary mountain tea and local tropical fruits.',
- 'A light half-day trekking experience taking you off the beaten path into pristine Thai villages. Walk past cascading rice terraces and wooden stilt homes surrounded by lush bamboo groves.',
- '• Mineral water & local guide
-• Tropical fruits tasting',
- '• Personal expenses & tips
-• Travel insurance',
- '• Comfortable walking shoes
-• Sun hat & camera',
- '• Children 5+ pay adult price.',
- '• Free cancellation up to 24 hours prior.',
- 'Authentic Village Life Trekking Tour | Vietnam Unique Travel',
- 'Book PLHDT-03 half-day walking trek through traditional Pu Luong stilt villages.'),
+-- Insert into tour_categories
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('1', '1');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('3', '1');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('5', '1');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('7', '1');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('10', '1');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('1', '2');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('4', '2');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('5', '2');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('7', '2');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('9', '2');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('11', '2');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('12', '2');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('2', '3');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('3', '3');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('4', '3');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('6', '3');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('8', '3');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('9', '3');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('10', '3');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('11', '3');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('12', '3');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('1', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('2', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('4', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('5', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('6', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('7', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('8', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('9', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('10', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('11', '4');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('2', '5');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('3', '5');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('8', '5');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('6', '6');
+INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES ('12', '6');
 
-(3, 'vi',
- 'PLHDT – 03: TOUR TREKKING: Trải Nghiệm Cuộc Sống Bản Đón & Bản Báng',
- 'Trekking nửa ngày khám phá nét đẹp bình yên bản làng người Thái',
- 'Hòa mình vào khung cảnh nhà sàn thanh bình, ruộng bậc thang xanh mướt và guồng nước bằng tre độc đáo dọc dòng suối Cham.',
- '• Trekking nhẹ nhàng qua ruộng bậc thang và bản làng Thái cổ kính.
-• Giao lưu cùng người dân bản địa và tìm hiểu canh tác lúa nước lâu đời.
-• Check-in guồng nước cọn tre khổng lồ bên dòng suối mát lành.
-• Thưởng thức trà núi và hoa quả tươi tại nhà sàn truyền thống.',
- 'Hành trình nửa ngày đi bộ ngắm cảnh đưa du khách len lỏi qua những lối nhỏ bình yên. Ngắm nhìn ruộng bậc thang nối tiếp nhau và lắng nghe tiếng suối reo cùng âm thanh yên bình của núi rừng Pù Luông.',
- '• Nước uống & Hướng dẫn viên bản địa
-• Thưởng thức hoa quả tươi',
- '• Chi phí cá nhân & tiền tip
-• Bảo hiểm du lịch',
- '• Giày đi bộ thoải mái
-• Mũ che nắng & máy ảnh',
- '• Trẻ em từ 5 tuổi tính giá người lớn.',
- '• Hủy trước 24 giờ miễn phí.',
- 'Tour Trekking Khám Phá Bản Đón Pù Luông | Vietnam Unique Travel',
- 'Đặt tour trekking nửa ngày PLHDT-03 trải nghiệm cuộc sống người Thái Pù Luông.');
+-- Insert into tour_prices
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('1', '1', 'motorbike', '1 pax', '580000', '22.00', 'Motorbike with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('2', '1', 'motorbike', '2 pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('3', '1', 'motorbike', '3+ pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('4', '2', 'motorbike', '1 pax', '520000', '20.00', 'Motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('5', '2', 'car', '1 pax', '1200000', '45.00', 'Private Car option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('6', '2', 'car', '2-3 pax', '870000', '33.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('7', '2', 'car', '4+ pax', '750000', '28.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('8', '3', 'walking', '1 pax', '600000', '25.00', 'Trekking with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('9', '4', 'motorbike', '1 pax', '850000', '35.00', 'Motorbike + Bamboo raft');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('10', '5', 'walking', '1 pax', '1250000', '48.00', '1 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('11', '5', 'walking', '2-3 pax', '950000', '37.00', '2-3 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('12', '5', 'walking', '4+ pax', '800000', '31.00', '4+ pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('13', '6', 'motorbike', '1 pax', '1130000', '43.00', 'Signature motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('14', '6', 'car', '1 pax', '2090000', '80.00', 'Signature private car 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('15', '6', 'car', '2-3 pax', '1620000', '62.00', 'Signature private car 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('16', '6', 'car', '4+ pax', '1370000', '52.00', 'Signature private car 4+ pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('17', '7', 'walking', '1 pax', '1580000', '60.00', 'Pu Luong Peak trek 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('18', '7', 'walking', '2-3 pax', '1100000', '42.00', 'Pu Luong Peak trek 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('19', '7', 'walking', '4+ pax', '900000', '34.00', 'Pu Luong Peak trek 4+ pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('20', '1', 'motorbike', '1 pax', '580000', '22.00', 'Motorbike with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('21', '1', 'motorbike', '2 pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('22', '1', 'motorbike', '3+ pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('23', '2', 'motorbike', '1 pax', '520000', '20.00', 'Motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('24', '2', 'car', '1 pax', '1200000', '45.00', 'Private Car option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('25', '2', 'car', '2-3 pax', '870000', '33.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('26', '2', 'car', '4+ pax', '750000', '28.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('27', '3', 'walking', '1 pax', '600000', '25.00', 'Trekking with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('28', '4', 'motorbike', '1 pax', '850000', '35.00', 'Motorbike + Bamboo raft');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('29', '5', 'walking', '1 pax', '1250000', '48.00', '1 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('30', '5', 'walking', '2-3 pax', '950000', '37.00', '2-3 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('31', '5', 'walking', '4+ pax', '800000', '31.00', '4+ pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('32', '6', 'motorbike', '1 pax', '1130000', '43.00', 'Signature motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('33', '6', 'car', '1 pax', '2090000', '80.00', 'Signature private car 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('34', '6', 'car', '2-3 pax', '1620000', '62.00', 'Signature private car 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('35', '6', 'car', '4+ pax', '1370000', '52.00', 'Signature private car 4+ pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('36', '7', 'walking', '1 pax', '1580000', '60.00', 'Pu Luong Peak trek 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('37', '7', 'walking', '2-3 pax', '1100000', '42.00', 'Pu Luong Peak trek 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('38', '7', 'walking', '4+ pax', '900000', '34.00', 'Pu Luong Peak trek 4+ pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('39', '1', 'motorbike', '1 pax', '580000', '22.00', 'Motorbike with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('40', '1', 'motorbike', '2 pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('41', '1', 'motorbike', '3+ pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('42', '2', 'motorbike', '1 pax', '520000', '20.00', 'Motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('43', '2', 'car', '1 pax', '1200000', '45.00', 'Private Car option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('44', '2', 'car', '2-3 pax', '870000', '33.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('45', '2', 'car', '4+ pax', '750000', '28.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('46', '3', 'walking', '1 pax', '600000', '25.00', 'Trekking with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('47', '4', 'motorbike', '1 pax', '850000', '35.00', 'Motorbike + Bamboo raft');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('48', '5', 'walking', '1 pax', '1250000', '48.00', '1 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('49', '5', 'walking', '2-3 pax', '950000', '37.00', '2-3 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('50', '5', 'walking', '4+ pax', '800000', '31.00', '4+ pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('51', '6', 'motorbike', '1 pax', '1130000', '43.00', 'Signature motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('52', '6', 'car', '1 pax', '2090000', '80.00', 'Signature private car 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('53', '6', 'car', '2-3 pax', '1620000', '62.00', 'Signature private car 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('54', '6', 'car', '4+ pax', '1370000', '52.00', 'Signature private car 4+ pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('55', '7', 'walking', '1 pax', '1580000', '60.00', 'Pu Luong Peak trek 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('56', '7', 'walking', '2-3 pax', '1100000', '42.00', 'Pu Luong Peak trek 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('57', '7', 'walking', '4+ pax', '900000', '34.00', 'Pu Luong Peak trek 4+ pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('58', '1', 'motorbike', '1 pax', '580000', '22.00', 'Motorbike with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('59', '1', 'motorbike', '2 pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('60', '1', 'motorbike', '3+ pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('61', '2', 'motorbike', '1 pax', '520000', '20.00', 'Motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('62', '2', 'car', '1 pax', '1200000', '45.00', 'Private Car option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('63', '2', 'car', '2-3 pax', '870000', '33.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('64', '2', 'car', '4+ pax', '750000', '28.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('65', '3', 'walking', '1 pax', '600000', '25.00', 'Trekking with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('66', '4', 'motorbike', '1 pax', '850000', '35.00', 'Motorbike + Bamboo raft');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('67', '5', 'walking', '1 pax', '1250000', '48.00', '1 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('68', '5', 'walking', '2-3 pax', '950000', '37.00', '2-3 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('69', '5', 'walking', '4+ pax', '800000', '31.00', '4+ pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('70', '6', 'motorbike', '1 pax', '1130000', '43.00', 'Signature motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('71', '6', 'car', '1 pax', '2090000', '80.00', 'Signature private car 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('72', '6', 'car', '2-3 pax', '1620000', '62.00', 'Signature private car 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('73', '6', 'car', '4+ pax', '1370000', '52.00', 'Signature private car 4+ pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('74', '7', 'walking', '1 pax', '1580000', '60.00', 'Pu Luong Peak trek 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('75', '7', 'walking', '2-3 pax', '1100000', '42.00', 'Pu Luong Peak trek 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('76', '7', 'walking', '4+ pax', '900000', '34.00', 'Pu Luong Peak trek 4+ pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('77', '1', 'motorbike', '1 pax', '580000', '22.00', 'Motorbike with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('78', '1', 'motorbike', '2 pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('79', '1', 'motorbike', '3+ pax', '580000', '22.00', 'Motorbike per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('80', '2', 'motorbike', '1 pax', '520000', '20.00', 'Motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('81', '2', 'car', '1 pax', '1200000', '45.00', 'Private Car option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('82', '2', 'car', '2-3 pax', '870000', '33.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('83', '2', 'car', '4+ pax', '750000', '28.00', 'Private Car per pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('84', '3', 'walking', '1 pax', '600000', '25.00', 'Trekking with local guide');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('85', '4', 'motorbike', '1 pax', '850000', '35.00', 'Motorbike + Bamboo raft');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('86', '5', 'walking', '1 pax', '1250000', '48.00', '1 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('87', '5', 'walking', '2-3 pax', '950000', '37.00', '2-3 pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('88', '5', 'walking', '4+ pax', '800000', '31.00', '4+ pax medium trek');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('89', '6', 'motorbike', '1 pax', '1130000', '43.00', 'Signature motorbike option');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('90', '6', 'car', '1 pax', '2090000', '80.00', 'Signature private car 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('91', '6', 'car', '2-3 pax', '1620000', '62.00', 'Signature private car 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('92', '6', 'car', '4+ pax', '1370000', '52.00', 'Signature private car 4+ pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('93', '7', 'walking', '1 pax', '1580000', '60.00', 'Pu Luong Peak trek 1 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('94', '7', 'walking', '2-3 pax', '1100000', '42.00', 'Pu Luong Peak trek 2-3 pax');
+INSERT IGNORE INTO `tour_prices` (`id`, `tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES ('95', '7', 'walking', '4+ pax', '900000', '34.00', 'Pu Luong Peak trek 4+ pax');
 
--- 6. Tour Categories Linking
-INSERT IGNORE INTO `tour_categories` (`tour_id`, `category_id`) VALUES
-(1, 2), (1, 4),
-(2, 2), (2, 3), (2, 4),
-(3, 1), (3, 3),
-(4, 1), (4, 3), (4, 4), (4, 5),
-(5, 1), (5, 3), (5, 4),
-(6, 1), (6, 2), (6, 3), (6, 4), (6, 5),
-(7, 1), (7, 5);
+-- Insert into tour_itinerary_steps
+INSERT IGNORE INTO `tour_itinerary_steps` (`id`, `tour_id`, `step_time`, `sort_order`, `created_at`) VALUES ('1', '1', '07:30 AM', '1', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `tour_itinerary_steps` (`id`, `tour_id`, `step_time`, `sort_order`, `created_at`) VALUES ('2', '1', '09:30 AM', '2', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `tour_itinerary_steps` (`id`, `tour_id`, `step_time`, `sort_order`, `created_at`) VALUES ('3', '1', '11:00 AM', '3', '2026-08-09 00:20:19');
 
--- 7. Tour Prices Setup
-INSERT IGNORE INTO `tour_prices` (`tour_id`, `transport_type`, `pax_tier`, `price_vnd`, `price_usd`, `note`) VALUES
-(1, 'motorbike', '1 pax', 580000, 22.00, 'Motorbike with local guide'),
-(1, 'motorbike', '2 pax', 580000, 22.00, 'Motorbike per pax'),
-(1, 'motorbike', '3+ pax', 580000, 22.00, 'Motorbike per pax'),
-(2, 'motorbike', '1 pax', 520000, 20.00, 'Motorbike option'),
-(2, 'car', '1 pax', 1200000, 45.00, 'Private Car option'),
-(2, 'car', '2-3 pax', 870000, 33.00, 'Private Car per pax'),
-(2, 'car', '4+ pax', 750000, 28.00, 'Private Car per pax'),
-(3, 'walking', '1 pax', 600000, 25.00, 'Trekking with local guide'),
-(4, 'motorbike', '1 pax', 850000, 35.00, 'Motorbike + Bamboo raft'),
-(5, 'walking', '1 pax', 1250000, 48.00, '1 pax medium trek'),
-(5, 'walking', '2-3 pax', 950000, 37.00, '2-3 pax medium trek'),
-(5, 'walking', '4+ pax', 800000, 31.00, '4+ pax medium trek'),
-(6, 'motorbike', '1 pax', 1130000, 43.00, 'Signature motorbike option'),
-(6, 'car', '1 pax', 2090000, 80.00, 'Signature private car 1 pax'),
-(6, 'car', '2-3 pax', 1620000, 62.00, 'Signature private car 2-3 pax'),
-(6, 'car', '4+ pax', 1370000, 52.00, 'Signature private car 4+ pax'),
-(7, 'walking', '1 pax', 1580000, 60.00, 'Pu Luong Peak trek 1 pax'),
-(7, 'walking', '2-3 pax', 1100000, 42.00, 'Pu Luong Peak trek 2-3 pax'),
-(7, 'walking', '4+ pax', 900000, 34.00, 'Pu Luong Peak trek 4+ pax');
+-- Insert into tour_itinerary_translations
+INSERT IGNORE INTO `tour_itinerary_translations` (`id`, `step_id`, `lang`, `title`, `description`) VALUES ('1', '1', 'en', 'Departure to Son Ba Muoi Village', 'Drivers pick you up at your homestay/resort for a 20km ride up mountains to Son Ba Muoi village at 1,180m altitude.');
+INSERT IGNORE INTO `tour_itinerary_translations` (`id`, `step_id`, `lang`, `title`, `description`) VALUES ('2', '1', 'vi', 'Khởi hành đi Bản Sơn Bá Mười', 'Lái xe đón quý khách tại Homestay/Resort bắt đầu hành trình 20km vượt đèo lên bản Sơn Bá Mười ở độ cao 1.180m.');
+INSERT IGNORE INTO `tour_itinerary_translations` (`id`, `step_id`, `lang`, `title`, `description`) VALUES ('3', '2', 'en', 'Hieu Village & Hieu Waterfall Exploration', 'Follow small trails through rice terraces. Hike along the 800m stream to witness petrified rocks and enjoy free swimming.');
+INSERT IGNORE INTO `tour_itinerary_translations` (`id`, `step_id`, `lang`, `title`, `description`) VALUES ('4', '2', 'vi', 'Tham quan Bản Hiêu & Thác Hiêu', 'Đi theo lối nhỏ qua ruộng bậc thang ngắm cảnh làng quê, dạo chơi dọc dòng thác Hiêu hóa đá và tự do tắm suối.');
+INSERT IGNORE INTO `tour_itinerary_translations` (`id`, `step_id`, `lang`, `title`, `description`) VALUES ('5', '3', 'en', 'Return to Homestay / Resort', 'Driver takes you back to your homestay/resort. Journey ends with unforgettable memories.');
+INSERT IGNORE INTO `tour_itinerary_translations` (`id`, `step_id`, `lang`, `title`, `description`) VALUES ('6', '3', 'vi', 'Trở về Homestay / Resort', 'Lái xe đưa quý khách trở lại điểm đón ban đầu. Kết thúc hành trình.');
 
--- 7.5 Tour Gallery Images
-INSERT IGNORE INTO `tour_images` (`tour_id`, `image_path`, `caption`, `sort_order`) VALUES
-(1, 'assets/images/hero.webp', 'Son Ba Muoi mountain panorama', 1),
-(1, 'assets/images/hieu-waterfall.webp', 'Hieu Waterfall stream', 2),
-(1, 'assets/images/bamboo-rafting.webp', 'Bamboo Rafting Cham Stream', 3),
-(1, 'assets/images/silk-weaving.webp', 'Brocade weaving at Lan Village', 4),
-(1, 'assets/images/water-wheels.webp', 'Pu Luong Water Wheels', 5),
-(2, 'assets/images/hero.webp', 'Pu Luong Landscape', 1),
-(2, 'assets/images/water-wheels.webp', 'Water Wheels', 2),
-(2, 'assets/images/hieu-waterfall.webp', 'Hieu Waterfall', 3),
-(3, 'assets/images/bamboo-rafting.webp', 'Bamboo Rafting', 1),
-(3, 'assets/images/silk-weaving.webp', 'Lan Village Weaving', 2),
-(4, 'assets/images/hieu-waterfall.webp', 'Hieu Waterfall', 1),
-(4, 'assets/images/water-wheels.webp', 'Water Wheels', 2),
-(5, 'assets/images/hero.webp', 'Trekking Pu Luong', 1),
-(5, 'assets/images/bamboo-rafting.webp', 'Cham Stream', 2),
-(6, 'assets/images/hero.webp', 'Signature Tour Pu Luong', 1),
-(6, 'assets/images/hieu-waterfall.webp', 'Hieu Waterfall', 2),
-(6, 'assets/images/silk-weaving.webp', 'Silk Weaving', 3),
-(7, 'assets/images/hero.webp', 'Pu Luong Peak', 1),
-(7, 'assets/images/water-wheels.webp', 'Water Wheels', 2);
+-- Insert into faqs
+INSERT IGNORE INTO `faqs` (`id`, `category`, `question_en`, `answer_en`, `question_vi`, `answer_vi`, `sort_order`, `status`, `created_at`) VALUES ('1', 'booking', 'How do I book a tour with Vietnam Unique Travel?', 'You can send a booking inquiry directly on our website, or contact our team via WhatsApp, LINE, Zalo, or email. We will verify availability and confirm within minutes.', 'Làm thế nào để đặt tour?', 'Quý khách có thể gửi yêu cầu đặt tour trực tiếp qua website hoặc liên hệ qua WhatsApp, Zalo, LINE, email. Đội ngũ tư vấn sẽ kiểm tra chỗ và xác nhận nhanh chóng.', '1', '1', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `faqs` (`id`, `category`, `question_en`, `answer_en`, `question_vi`, `answer_vi`, `sort_order`, `status`, `created_at`) VALUES ('2', 'custom', 'Can I request a customized Private Tour?', 'Yes! We specialize in tailored Private Tours designed around your schedule, fitness level, and personal preferences.', 'Tôi có thể đặt tour riêng (Private Tour) không?', 'Có. Chúng tôi chuyên thiết kế các chương trình Private Tour theo lịch trình, thể trạng và sở thích riêng của từng nhóm khách.', '2', '1', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `faqs` (`id`, `category`, `question_en`, `answer_en`, `question_vi`, `answer_vi`, `sort_order`, `status`, `created_at`) VALUES ('3', 'preparation', 'What should I prepare before the trip?', 'After confirming your tour, we will send a full preparation kit including recommended clothing, shoes, weather updates, and packing checklist.', 'Tôi cần chuẩn bị gì trước chuyến đi?', 'Sau khi xác nhận tour, chúng tôi sẽ gửi tài liệu chi tiết về thời tiết, trang phục, vật dụng cá nhân cần mang theo.', '3', '1', '2026-08-09 00:20:19');
 
--- 8. Tour Itinerary Steps for PLHDT-01
-INSERT IGNORE INTO `tour_itinerary_steps` (`id`, `tour_id`, `step_time`, `sort_order`) VALUES
-(1, 1, '07:30 AM', 1),
-(2, 1, '09:30 AM', 2),
-(3, 1, '11:00 AM', 3);
+-- Insert into testimonials
+INSERT IGNORE INTO `testimonials` (`id`, `client_name`, `client_country`, `client_avatar`, `rating`, `content_en`, `content_vi`, `tour_name`, `is_featured`, `sort_order`, `created_at`) VALUES ('1', 'Sarah Jenkins', 'Australia', '', '5', 'An extraordinary experience in Pu Luong! The bamboo rafting on Cham stream and the high village of Son Ba Muoi exceeded our expectations. The local guide was super attentive!', 'Một trải nghiệm phi thường tại Pù Luông! Chèo bè tre trên dòng suối Chàm và bản trên cao Son Bá Mười đẹp vượt ngoài mong đợi. Hướng dẫn viên bản địa rất chu đáo!', 'Hidden Villages & Hieu Waterfall Adventure', '1', '1', '2026-08-11 20:46:18');
+INSERT IGNORE INTO `testimonials` (`id`, `client_name`, `client_country`, `client_avatar`, `rating`, `content_en`, `content_vi`, `tour_name`, `is_featured`, `sort_order`, `created_at`) VALUES ('2', 'Marcus Thorne', 'Germany', '', '5', 'The trek to conquer Pu Luong Peak was challenging but deeply rewarding! The summit BBQ lunch and herbal foot soak afterwards was pure perfection.', 'Chuyến leo đỉnh Pù Luông đầy thử thách nhưng vô cùng xứng đáng! Tiệc nướng BBQ trên đỉnh và ngâm chân thảo dược cuối ngày thật hoàn hảo.', 'Summit Expedition: Conquer Pu Luong Peak', '1', '2', '2026-08-11 20:46:18');
+INSERT IGNORE INTO `testimonials` (`id`, `client_name`, `client_country`, `client_avatar`, `rating`, `content_en`, `content_vi`, `tour_name`, `is_featured`, `sort_order`, `created_at`) VALUES ('3', 'Elena & David Moreau', 'France', '', '5', 'The craftsmanship of the giant bamboo water wheels and the peaceful river drift was the highlight of our Vietnam vacation. Pure serenity and authentic culture.', 'Những cọn nước khổng lồ bằng tre và trải nghiệm lướt bè tre êm đềm trên sông là điểm nhấn tuyệt vời nhất trong kỳ nghỉ của chúng tôi. Rất đỗi bình yên.', 'Cham River Bamboo Rafting & Water Wheels', '1', '3', '2026-08-11 20:46:18');
+INSERT IGNORE INTO `testimonials` (`id`, `client_name`, `client_country`, `client_avatar`, `rating`, `content_en`, `content_vi`, `tour_name`, `is_featured`, `sort_order`, `created_at`) VALUES ('4', 'Kenji Takahashi', 'Japan', '', '5', 'Cycling through tranquil rice fields and staying in a traditional White Thai stilt house gave us an unforgettable memory of Vietnamese hospitality.', 'Đạp xe qua những cánh đồng lúa thanh bình và nghỉ tại nhà sàn người Thái Trắng đã để lại trong chúng tôi kỷ niệm khó quên về lòng hiếu khách của người Việt.', 'Mai Chau Emerald Valley Cycling', '1', '4', '2026-08-11 20:46:18');
+INSERT IGNORE INTO `testimonials` (`id`, `client_name`, `client_country`, `client_avatar`, `rating`, `content_en`, `content_vi`, `tour_name`, `is_featured`, `sort_order`, `created_at`) VALUES ('5', 'Clara Lindqvist', 'Sweden', '', '5', 'Watching the golden sunrise over Don Village terraces was breathtaking. Vietnam Unique Travel handled every detail responsibly and professionally.', 'Ngắm bình minh rực rỡ trên những thửa ruộng bậc thang Bản Đôn là khoảnh khắc kỳ diệu. Vietnam Unique Travel tổ chức cực kỳ chu đáo và chuyên nghiệp.', 'Pu Luong Terraced Rice Fields Trek', '1', '5', '2026-08-11 20:46:18');
+INSERT IGNORE INTO `testimonials` (`id`, `client_name`, `client_country`, `client_avatar`, `rating`, `content_en`, `content_vi`, `tour_name`, `is_featured`, `sort_order`, `created_at`) VALUES ('6', 'James & Liam Wilson', 'United Kingdom', '', '5', 'High above the clouds at 1,180m, the fresh mountain air and pristine hamlets felt like another world. The authentic home-cooked meals were delicious!', 'Bản Son Bá Mười ở độ cao 1.180m quanh năm mây phủ như một thế giới thần tiên. Bữa cơm gia đình ấm cúng của người dân tộc Thái rất ngon và đậm vị!', 'Son Ba Muoi Highland Cloud Hunting', '1', '6', '2026-08-11 20:46:18');
+INSERT IGNORE INTO `testimonials` (`id`, `client_name`, `client_country`, `client_avatar`, `rating`, `content_en`, `content_vi`, `tour_name`, `is_featured`, `sort_order`, `created_at`) VALUES ('7', 'Isabella Rossi', 'Italy', '', '5', 'Trekking down into the secluded Kho Muong valley surrounded by dramatic limestone karsts was an adventure of a lifetime. Highly recommended!', 'Hành trình khám phá thung lũng Kho Mường và hang dơi giữa những dãy núi đá vôi hùng vĩ là trải nghiệm tuyệt vời nhất đời tôi. Rất đáng để thử!', 'Kho Muong Cave & Bat Sanctuary Discovery', '1', '7', '2026-08-11 20:46:18');
+INSERT IGNORE INTO `testimonials` (`id`, `client_name`, `client_country`, `client_avatar`, `rating`, `content_en`, `content_vi`, `tour_name`, `is_featured`, `sort_order`, `created_at`) VALUES ('8', 'Oliver & Mia Chen', 'Singapore', '', '5', 'A truly sustainable, authentic way to travel. We loved connecting with local craftsmen, weaving masters, and learning about traditional herbal remedies.', 'Một chuyến đi chuẩn du lịch bền vững và giàu trải nghiệm. Chúng tôi rất thích được trò chuyện cùng các nghệ nhân dệt thổ cẩm và thử thảo dược bản địa.', 'Northern Frontier Cultural Immersion', '1', '8', '2026-08-11 20:46:18');
 
-INSERT IGNORE INTO `tour_itinerary_translations` (`step_id`, `lang`, `title`, `description`) VALUES
-(1, 'en', 'Departure to Son Ba Muoi Village', 'Drivers pick you up at your homestay/resort for a 20km ride up mountains to Son Ba Muoi village at 1,180m altitude.'),
-(1, 'vi', 'Khởi hành đi Bản Sơn Bá Mười', 'Lái xe đón quý khách tại Homestay/Resort bắt đầu hành trình 20km vượt đèo lên bản Sơn Bá Mười ở độ cao 1.180m.'),
-(2, 'en', 'Hieu Village & Hieu Waterfall Exploration', 'Follow small trails through rice terraces. Hike along the 800m stream to witness petrified rocks and enjoy free swimming.'),
-(2, 'vi', 'Tham quan Bản Hiêu & Thác Hiêu', 'Đi theo lối nhỏ qua ruộng bậc thang ngắm cảnh làng quê, dạo chơi dọc dòng thác Hiêu hóa đá và tự do tắm suối.'),
-(3, 'en', 'Return to Homestay / Resort', 'Driver takes you back to your homestay/resort. Journey ends with unforgettable memories.'),
-(3, 'vi', 'Trở về Homestay / Resort', 'Lái xe đưa quý khách trở lại điểm đón ban đầu. Kết thúc hành trình.');
+-- Insert into posts
+INSERT IGNORE INTO `posts` (`id`, `slug`, `featured_image`, `is_featured`, `status`, `views`, `published_at`, `created_at`, `updated_at`) VALUES ('1', 'ultimate-travel-guide-to-pu-luong-nature-reserve', '/assets/images/hero.webp', '1', '1', '120', '2026-08-09 00:20:19', '2026-08-09 00:20:19', '2026-08-09 00:20:19');
+INSERT IGNORE INTO `posts` (`id`, `slug`, `featured_image`, `is_featured`, `status`, `views`, `published_at`, `created_at`, `updated_at`) VALUES ('2', 'why-responsible-tourism-matters-in-vietnam-mountains', '/assets/images/bamboo-rafting.webp', '1', '1', '85', '2026-08-09 00:20:19', '2026-08-09 00:20:19', '2026-08-09 00:20:19');
 
--- 9. Insert FAQs
-INSERT IGNORE INTO `faqs` (`id`, `category`, `question_en`, `answer_en`, `question_vi`, `answer_vi`, `sort_order`) VALUES
-(1, 'booking', 'How do I book a tour with Vietnam Unique Travel?', 'You can send a booking inquiry directly on our website, or contact our team via WhatsApp, LINE, Zalo, or email. We will verify availability and confirm within minutes.', 'Làm thế nào để đặt tour?', 'Quý khách có thể gửi yêu cầu đặt tour trực tiếp qua website hoặc liên hệ qua WhatsApp, Zalo, LINE, email. Đội ngũ tư vấn sẽ kiểm tra chỗ và xác nhận nhanh chóng.', 1),
-(2, 'custom', 'Can I request a customized Private Tour?', 'Yes! We specialize in tailored Private Tours designed around your schedule, fitness level, and personal preferences.', 'Tôi có thể đặt tour riêng (Private Tour) không?', 'Có. Chúng tôi chuyên thiết kế các chương trình Private Tour theo lịch trình, thể trạng và sở thích riêng của từng nhóm khách.', 2),
-(3, 'preparation', 'What should I prepare before the trip?', 'After confirming your tour, we will send a full preparation kit including recommended clothing, shoes, weather updates, and packing checklist.', 'Tôi cần chuẩn bị gì trước chuyến đi?', 'Sau khi xác nhận tour, chúng tôi sẽ gửi tài liệu chi tiết về thời tiết, trang phục, vật dụng cá nhân cần mang theo.', 3);
+-- Insert into post_translations
+INSERT IGNORE INTO `post_translations` (`id`, `post_id`, `lang`, `title`, `summary`, `content`, `seo_title`, `seo_description`) VALUES ('1', '1', 'en', 'Ultimate Travel Guide to Pu Luong Nature Reserve 2026', 'Everything you need to know about weather, rice harvest seasons, trekking routes, and ethnic culture in Pu Luong.', '<p>Pu Luong Nature Reserve is one of Northern Vietnam hidden gems. Located just 160km southwest of Hanoi, this untouched sanctuary offers a breathtaking mix of limestone karst peaks, cascading rice terraces, and authentic Thai and Muong ethnic culture.</p><h2>Best Time to Visit</h2><p>The golden rice harvest seasons occur twice a year: May to June and September to October.</p>', 'Pu Luong Travel Guide 2026 | Vietnam Unique Travel', 'Read our complete travel guide to Pu Luong Nature Reserve: best season, top tours, rice harvest dates.');
+INSERT IGNORE INTO `post_translations` (`id`, `post_id`, `lang`, `title`, `summary`, `content`, `seo_title`, `seo_description`) VALUES ('2', '1', 'vi', 'Cẩm Nang Du Lịch Pù Luông Tự Nhiên Mới Nhất 2026', 'Tất tần tật thông tin thời tiết, mùa lúa chín, cung đường trekking và văn hóa bản địa Pù Luông.', '<p>Khu bảo tồn thiên nhiên Pù Luông là viên ngọc xanh của miền Bắc Việt Nam, cách Hà Nội khoảng 160km. Nơi đây sở hữu thung lũng lúa bậc thang tuyệt đẹp, những nếp nhà sàn người Thái và dòng thác Hiêu hóa đá kỳ vĩ.</p><h2>Thời điểm lý tưởng nhất</h2><p>Mùa lúa chín Pù Luông diễn ra 2 lần trong năm: Tháng 5 - 6 và Tháng 9 - 10.</p>', 'Cẩm Nang Du Lịch Pù Luông 2026 | Vietnam Unique Travel', 'Cẩm nang chi tiết kinh nghiệm du lịch Pù Luông: mùa lúa chín, các tour trekking và điểm tham quan hot nhất.');
 
--- 10. Insert Testimonials
-INSERT IGNORE INTO `testimonials` (`id`, `client_name`, `client_country`, `client_avatar`, `rating`, `content_en`, `content_vi`, `tour_name`, `is_featured`, `sort_order`) VALUES
-(1, 'Sarah Jenkins', 'Australia', '/assets/images/hero.webp', 5, 'An extraordinary experience in Pu Luong! The bamboo rafting on Cham stream and the high village of Son Ba Muoi exceeded our expectations. The local guide was super attentive!', 'Một trải nghiệm tuyệt vời tại Pù Luông! Đi bè tre trên suối Cham và thăm bản Sơn Bá Mười vượt xa mong đợi của chúng tôi. HDV bản địa rất chu đáo!', 'PLHDT-01: Hidden Villages & Hieu Waterfall', 1, 1),
-(2, 'Marcus Thorne', 'Germany', '/assets/images/water-wheels.webp', 5, 'The conquer of Pu Luong Peak was challenging but rewarding! The BBQ lunch on the mountain peak and foot massage afterwards was perfection.', 'Hành trình chinh phục đỉnh Pù Luông đầy thử thách nhưng rất xứng đáng! Bữa trưa BBQ trên đỉnh núi và ngâm chân massage cuối ngày thật tuyệt vời.', 'PLFDT-03: Conquer Pu Luong Peak', 1, 2);
-
--- 11. Insert Sample Blog Posts
-INSERT IGNORE INTO `posts` (`id`, `slug`, `featured_image`, `is_featured`, `status`, `views`) VALUES
-(1, 'ultimate-travel-guide-to-pu-luong-nature-reserve', '/assets/images/hero.webp', 1, 1, 120),
-(2, 'why-responsible-tourism-matters-in-vietnam-mountains', '/assets/images/bamboo-rafting.webp', 1, 1, 85);
-
-INSERT IGNORE INTO `post_translations` (`post_id`, `lang`, `title`, `summary`, `content`, `seo_title`, `seo_description`) VALUES
-(1, 'en', 'Ultimate Travel Guide to Pu Luong Nature Reserve 2026', 'Everything you need to know about weather, rice harvest seasons, trekking routes, and ethnic culture in Pu Luong.', '<p>Pu Luong Nature Reserve is one of Northern Vietnam hidden gems. Located just 160km southwest of Hanoi, this untouched sanctuary offers a breathtaking mix of limestone karst peaks, cascading rice terraces, and authentic Thai and Muong ethnic culture.</p><h2>Best Time to Visit</h2><p>The golden rice harvest seasons occur twice a year: May to June and September to October.</p>', 'Pu Luong Travel Guide 2026 | Vietnam Unique Travel', 'Read our complete travel guide to Pu Luong Nature Reserve: best season, top tours, rice harvest dates.'),
-(1, 'vi', 'Cẩm Nang Du Lịch Pù Luông Tự Nhiên Mới Nhất 2026', 'Tất tần tật thông tin thời tiết, mùa lúa chín, cung đường trekking và văn hóa bản địa Pù Luông.', '<p>Khu bảo tồn thiên nhiên Pù Luông là viên ngọc xanh của miền Bắc Việt Nam, cách Hà Nội khoảng 160km. Nơi đây sở hữu thung lũng lúa bậc thang tuyệt đẹp, những nếp nhà sàn người Thái và dòng thác Hiêu hóa đá kỳ vĩ.</p><h2>Thời điểm lý tưởng nhất</h2><p>Mùa lúa chín Pù Luông diễn ra 2 lần trong năm: Tháng 5 - 6 và Tháng 9 - 10.</p>', 'Cẩm Nang Du Lịch Pù Luông 2026 | Vietnam Unique Travel', 'Cẩm nang chi tiết kinh nghiệm du lịch Pù Luông: mùa lúa chín, các tour trekking và điểm tham quan hot nhất.');
-
--- 12. Site Settings Initial Setup
-INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES
-('site_name', 'Vietnam Unique Travel'),
-('company_name', 'CÔNG TY CỔ PHẦN DU LỊCH THÀNH HƯNG'),
-('tax_code', '0102126315'),
-('hotline', '+84 362 191 568'),
-('office_phone', '+84 943 642 389'),
-('sales_phone', '+84 988 956 496'),
-('email', 'sales.vietnamuniquetravel@gmail.com'),
-('website', 'vietnamuniquetravel.com'),
-('address', '200 Ngõ 192 Lê Trọng Tấn, Phường Phương Liệt, Hà Nội'),
-('support_channels', 'WhatsApp, LINE, Zalo, iMessage'),
-('whatsapp_number', '+84362191568'),
-('seo_default_title', 'Vietnam Unique Travel | Authentic & Responsible Tourism in Vietnam'),
-('seo_default_description', 'Vietnam Unique Travel delivers authentic, nature-focused, and responsible travel experiences across Pu Luong, Mai Chau, Ha Giang, and beyond.');
+-- Insert into settings
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('address', '200 Ngõ 192 Lê Trọng Tấn, Phường Phương Liệt, Hà Nội');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('company_name', 'CÔNG TY CỔ PHẦN DU LỊCH THÀNH HƯNG');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('email', 'sales.vietnamuniquetravel@gmail.com');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('hotline', '+84 362 191 568');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('office_phone', '+84 943 642 389');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('sales_phone', '+84 988 956 496');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('seo_default_description', 'Vietnam Unique Travel delivers authentic, nature-focused, and responsible travel experiences across Pu Luong, Mai Chau, Ha Giang, and beyond.');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('seo_default_title', 'Vietnam Unique Travel | Authentic & Responsible Tourism in Vietnam');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('site_name', 'Vietnam Unique Travel');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('support_channels', 'WhatsApp, LINE, Zalo, iMessage');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('tax_code', '0102126315');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('website', 'vietnamuniquetravel.com');
+INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES ('whatsapp_number', '+84362191568');
 
 SET FOREIGN_KEY_CHECKS = 1;
